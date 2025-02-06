@@ -1,4 +1,4 @@
-## this is the repository for self-surprise-lookit-private
+## this is the repository for self-surprise-lookit-PUBLIC
 
 ### repo structure 
 
