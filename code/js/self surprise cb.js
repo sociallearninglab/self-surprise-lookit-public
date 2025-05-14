@@ -1,144 +1,4 @@
 function generateProtocol(child, pastSessions) {
-    // Helper functions for randomization
-    function shuffle(array) {
-        const shuffled = [...array];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
-    }
-
-    // Define and shuffle the blocks
-    const blocks = ['toy', 'orange', 'crayons'];
-    const shuffledBlocks = shuffle(blocks);
-
-    // Create block frames and sequence
-    const blockFrames = {};
-    const blockSequence = [];
-
-    shuffledBlocks.forEach(block => {
-        const unsurprisingFrameId = block + '-unsurprising';
-        const surprisingFrameId = block + '-surprising';
-        
-        blockSequence.push(unsurprisingFrameId);
-        blockSequence.push(surprisingFrameId);
-        
-        // Unsurprising frame
-        blockFrames[unsurprisingFrameId] = {
-            'kind': 'exp-lookit-images-audio',
-            'generateProperties': `function(expData, sequence, child, pastSessions) { let images = [{ id: "topImage", src: "${block}.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }]; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 6; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "not_surprised", displayDelayMs: 10000 }); images.push({ id: "little_surprised", src: "surprise_scale_a_little_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "little_surprised", displayDelayMs: 10000 }); images.push({ id: "sorta_surprised", src: "surprise_scale_sorta_surprised.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "sorta_surprised", displayDelayMs: 10000 }); images.push({ id: "very_surprised", src: "surprise_scale_very_surprised.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "very_surprised", displayDelayMs: 10000 }); return { images: images }; }`,
-            'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-            'audio': block + '_unsurprising',
-            'audioTypes': ['mp3'],
-            'choiceRequired': true,
-            'waitForEndAudio': true,
-            'canMakeChoiceBeforeAudioFinished': false,
-            'mustPlay': false,
-            'showPreviousButton': false,
-            'showReplayButton': true,
-            'feedbackAudio': true,
-            'parentTextBlock': {
-                'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices!',
-                'fontSize': 'small',
-                'css': {
-                    'background-color': '#f8f3bf',
-                    'width': '50vw',
-                    'height': '16vh',
-                    'margin': 'auto',
-                    'bottom': '2vh',
-                    'right': '0',
-                    'left': '0',
-                    'position': 'fixed',
-                    'padding': '10px 25px',
-                    'text-align': 'center',
-                    'display': 'table-cell',
-                    'vertical-align': 'middle',
-                    'border-radius': '15px'
-                }
-            },
-            'highlights': [
-                {
-                    'range': [11, 12.25],
-                    'imageId': 'not_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [12.4, 13.75],
-                    'imageId': 'little_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [13.9, 15.25],
-                    'imageId': 'sorta_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [15.4, 16.35],
-                    'imageId': 'very_surprised',
-                    'color': 'yellow'
-                }
-            ]
-        };
-        
-        // Surprising frame
-        blockFrames[surprisingFrameId] = {
-            'kind': 'exp-lookit-images-audio',
-            'generateProperties': `function(expData, sequence, child, pastSessions) { let images = [{ id: "topImage", src: "${block}.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }]; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 6; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "not_surprised", displayDelayMs: 10000 }); images.push({ id: "little_surprised", src: "surprise_scale_a_little_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "little_surprised", displayDelayMs: 10000 }); images.push({ id: "sorta_surprised", src: "surprise_scale_sorta_surprised.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "sorta_surprised", displayDelayMs: 10000 }); images.push({ id: "very_surprised", src: "surprise_scale_very_surprised.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "very_surprised", displayDelayMs: 10000 }); return { images: images }; }`,
-            'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-            'audio': block + '_surprising',
-            'audioTypes': ['mp3'],
-            'choiceRequired': true,
-            'waitForEndAudio': true,
-            'canMakeChoiceBeforeAudioFinished': false,
-            'mustPlay': false,
-            'showPreviousButton': false,
-            'showReplayButton': true,
-            'feedbackAudio': true,
-            'parentTextBlock': {
-                'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices!',
-                'fontSize': 'small',
-                'css': {
-                    'background-color': '#f8f3bf',
-                    'width': '50vw',
-                    'height': '16vh',
-                    'margin': 'auto',
-                    'bottom': '2vh',
-                    'right': '0',
-                    'left': '0',
-                    'position': 'fixed',
-                    'padding': '10px 25px',
-                    'text-align': 'center',
-                    'display': 'table-cell',
-                    'vertical-align': 'middle',
-                    'border-radius': '15px'
-                }
-            },
-            'highlights': [
-                {
-                    'range': [11, 12.25],
-                    'imageId': 'not_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [12.4, 13.75],
-                    'imageId': 'little_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [13.9, 15.25],
-                    'imageId': 'sorta_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [15.4, 16.35],
-                    'imageId': 'very_surprised',
-                    'color': 'yellow'
-                }
-            ]
-        };
-    });
-
     // Determine condition randomly
     const options = ['surprising', 'unsurprising'];
     const condition = options[Math.floor(Math.random() * options.length)];
@@ -147,7 +7,7 @@ function generateProtocol(child, pastSessions) {
     if (condition === 'surprising') {
         // Create the frames object
         const frames = {
-            'welcome': {
+                'welcome': {
                     'kind': 'exp-lookit-text',
                     'blocks': [
                         {
@@ -273,14 +133,14 @@ function generateProtocol(child, pastSessions) {
                         ]
                     }
                 },
-
-                'questions-intro': {
+                
+                'welcome-to-my-game': {
                     'kind': 'exp-lookit-video',
                     'video': {
                         'top': 0,
                         'left': 0,
                         'width': 100,
-                        'source': 'questions_intro',
+                        'source': 'background_welcome',
                         'loop': false
                     },
                     'backgroundColor': 'black',
@@ -309,40 +169,6 @@ function generateProtocol(child, pastSessions) {
                     'showPreviousButton': false,
                     'showReplayButton': true,
                     'videoTypes': ['mp4']
-                },
-                
-                'questions-outro': {
-                    'kind': 'exp-lookit-images-audio',
-                    'generateProperties': `function(expData, sequence, child, pastSessions) { let images = []; return { images: images }; }`,
-                    'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                    'audio': 'questions_outro',
-                    'audioTypes': ['mp3'],
-                    'backgroundColor': 'black',
-                    'autoProceed': false,
-                    'parentTextBlock': {
-                        'text': '<h3 style="margin-top: 0; margin-bottom: 10px">For Parents</h3><p style="margin-top: 5px; line-height: 1.4">Click NEXT when you\'re ready to continue!</p>',
-                        'fontSize': 'small',
-                        'css': {
-                            'background-color': '#f8f3bf',
-                            'width': '50vw',
-                            'height': '16vh',
-                            'margin': 'auto',
-                            'bottom': '2vh',
-                            'right': '0',
-                            'left': '0',
-                            'position': 'fixed',
-                            'padding': '10px 25px',
-                            'text-align': 'center',
-                            'display': 'table-cell',
-                            'vertical-align': 'middle',
-                            'border-radius': '15px'
-                        }
-                    },
-                    'doRecording': false,
-                    'showPreviousButton': false,
-                    'showReplayButton': true,
-                    'waitForEndAudio': true,
-                    'canMakeChoiceBeforeAudioFinished': false
                 },
                 
                 
@@ -542,7 +368,7 @@ function generateProtocol(child, pastSessions) {
 
             'majority-select-3-combined': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const secondLastFrameId = sequence[sequence.length - 2]; const lastFrameId = sequence[sequence.length - 1]; const secondLastFrame = expData[secondLastFrameId]; const lastFrame = expData[lastFrameId]; const secondLastClickEvents = secondLastFrame?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const lastClickEvents = lastFrame?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const secondLastSelection = secondLastClickEvents[secondLastClickEvents.length - 1]?.imageId; const lastSelection = lastClickEvents[lastClickEvents.length - 1]?.imageId; let images = []; for (let i = 0; i < 12; i++) { const col = i % 6; const row = Math.floor(i / 6); const cardNum = String(i + 1); const isPreviouslySelected = cardNum === secondLastSelection || cardNum === lastSelection; images.push({ id: cardNum, src: isPreviouslySelected ? "card_back_selected.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: isPreviouslySelected, feedbackAudio: "okay_alldone" }); } return { images: images, audio: "cards_selection_picklast", highlights: [] }; }',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const secondLastFrameId = sequence[sequence.length - 2]; const lastFrameId = sequence[sequence.length - 1]; const secondLastFrame = expData[secondLastFrameId]; const lastFrame = expData[lastFrameId]; const secondLastClickEvents = secondLastFrame?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const lastClickEvents = lastFrame?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const secondLastSelection = secondLastClickEvents[secondLastClickEvents.length - 1]?.imageId; const lastSelection = lastClickEvents[lastClickEvents.length - 1]?.imageId; let images = []; for (let i = 0; i < 12; i++) { const col = i % 6; const row = Math.floor(i / 6); const cardNum = String(i + 1); const isPreviouslySelected = cardNum === secondLastSelection || cardNum === lastSelection; images.push({ id: cardNum, src: isPreviouslySelected ? "card_back_selected.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: isPreviouslySelected, feedbackAudio: "stars_prereveal_question" }); } return { images: images, audio: "cards_selection_picklast", highlights: [] }; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audioTypes': ['mp3'],
                 'choiceRequired': true,
@@ -572,11 +398,124 @@ function generateProtocol(child, pastSessions) {
                         }
                     }
             },
+            
+            'majority-prediction-question': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 5; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "three_stars", src: "three_stars.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_threestars" }); images.push({ id: "two_stars", src: "two_stars.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_twostars" }); images.push({ id: "one_star", src: "one_star.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_onestar" }); images.push({ id: "all_dash", src: "all_dash.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_nostars" }); return { images: images }; }',
+                    'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                    'audio': 'stars_prereveal_prediction',
+                    'audioTypes': ['mp3'],
+                    'choiceRequired': true,
+                    'waitForEndAudio': true,
+                    'canMakeChoiceBeforeAudioFinished': false,
+                    'mustPlay': false,
+                    'showPreviousButton': false,
+                    'showReplayButton': true,
+                    'mustPlayCount': 0,
+                    'minDurationToAudioEnd': 0,
+                    'durationSeconds': 10,
+                    'feedbackAudio': true,
+                    'parentTextBlock': {
+                        'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                        'fontSize': 'small',
+                        'css': {
+                            'background-color': '#f8f3bf',
+                            'width': '50vw',
+                            'height': '16vh',
+                            'margin': 'auto',
+                            'bottom': '2vh',
+                            'right': '0',
+                            'left': '0',
+                            'position': 'fixed',
+                            'padding': '10px 25px',
+                            'text-align': 'center',
+                            'display': 'table-cell',
+                            'vertical-align': 'middle',
+                            'border-radius': '15px'
+                        }
+                    },
+                    'highlights': [
+                        {
+                            'range': [5, 6.25],
+                            'imageId': 'three_stars',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [6.25, 7.5],
+                            'imageId': 'two_stars',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [7.5, 8.75],
+                            'imageId': 'one_star',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [8.75, 9.99],
+                            'imageId': 'all_dash',
+                            'color': 'yellow'
+                        },
+                    ]
+                },
+            
+            
+            'majority-prediction-question-confidence': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const previousFrameId = sequence[sequence.length - 1]; const clickEvents = expData[previousFrameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImageId = clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : "three_suns"; let audioFile; if (selectedImageId === "all_dash") { audioFile = "stars_prereveal_no_stars_certainty"; } else if (selectedImageId === "one_star") { audioFile = "stars_prereveal_one_star_certainty"; } else if (selectedImageId === "two_stars") { audioFile = "stars_prereveal_two_stars_certainty"; } else { audioFile = "stars_prereveal_three_stars_certainty"; } let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 10; const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2; images.push({ id: "not_sure", src: "not_sure.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_notsosure" }); images.push({ id: "kinda_sure", src: "kinda_sure.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_kindofsure" }); images.push({ id: "really_sure", src: "really_sure.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_reallysure" }); return { images: images, audio: audioFile }; }',
+                'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                'audioTypes': ['mp3'],
+                'choiceRequired': true,
+                'waitForEndAudio': true,
+                'canMakeChoiceBeforeAudioFinished': false,
+                'mustPlay': false,
+                'showPreviousButton': false,
+                'showReplayButton': true,
+                'mustPlayCount': 0,
+                'minDurationToAudioEnd': 0,
+                'durationSeconds': 10,
+                'feedbackAudio': true,
+                'parentTextBlock': {
+                    'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                    'fontSize': 'small',
+                    'css': {
+                        'background-color': '#f8f3bf',
+                        'width': '50vw',
+                        'height': '16vh',
+                        'margin': 'auto',
+                        'bottom': '2vh',
+                        'right': '0',
+                        'left': '0',
+                        'position': 'fixed',
+                        'padding': '10px 25px',
+                        'text-align': 'center',
+                        'display': 'table-cell',
+                        'vertical-align': 'middle',
+                        'border-radius': '15px'
+                    }
+                },
+                'highlights': [
+                    {
+                        'range': [7.5, 9],
+                        'imageId': 'not_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [9, 10.5],
+                        'imageId': 'kinda_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [10.5, 12],
+                        'imageId': 'really_sure',
+                        'color': 'yellow'
+                    }
+                ]
+            },
 
  
                'majority-reveal-stars': {
                     'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 3], sequence[sequence.length - 2], sequence[sequence.length - 1]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const col = i % 6; const row = Math.floor(i / 6); const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); images.push({ id: cardNum, src: isSelected ? "card_star.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
+                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 5], sequence[sequence.length - 4], sequence[sequence.length - 3]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const col = i % 6; const row = Math.floor(i / 6); const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); images.push({ id: cardNum, src: isSelected ? "card_star.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audio': 'cards_selection_reveal',
                     'waitForEndAudio': true,
@@ -896,7 +835,7 @@ function generateProtocol(child, pastSessions) {
                 
                 'minority-select-3-combined': {
                     'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const firstClickEvents = expData[sequence[sequence.length - 2]]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const secondClickEvents = expData[sequence[sequence.length - 1]]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const firstSelection = firstClickEvents[firstClickEvents.length - 1]?.imageId; const secondSelection = secondClickEvents[secondClickEvents.length - 1]?.imageId; let images = []; for (let i = 0; i < 12; i++) { const col = i % 6; const row = Math.floor(i / 6); const cardNum = String(i + 1); const isSelected = cardNum === firstSelection || cardNum === secondSelection; images.push({ id: cardNum, src: isSelected ? "card_back_selected.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, feedbackAudio: "okay_alldone", nonChoiceOption: isSelected }); } return { images: images, audio: "cards_selection_picklast", highlights: [] }; }',
+                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const firstClickEvents = expData[sequence[sequence.length - 2]]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const secondClickEvents = expData[sequence[sequence.length - 1]]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const firstSelection = firstClickEvents[firstClickEvents.length - 1]?.imageId; const secondSelection = secondClickEvents[secondClickEvents.length - 1]?.imageId; let images = []; for (let i = 0; i < 12; i++) { const col = i % 6; const row = Math.floor(i / 6); const cardNum = String(i + 1); const isSelected = cardNum === firstSelection || cardNum === secondSelection; images.push({ id: cardNum, src: isSelected ? "card_back_selected.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, feedbackAudio: "stars_prereveal_question", nonChoiceOption: isSelected }); } return { images: images, audio: "cards_selection_picklast", highlights: [] }; }',
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audioTypes': ['mp3'],
                     'choiceRequired': true,
@@ -927,9 +866,124 @@ function generateProtocol(child, pastSessions) {
                         }
                 },
                 
+                
+                
+            'minority-prediction-question': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 5; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "three_suns", src: "three_suns.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_threesuns" }); images.push({ id: "two_suns", src: "two_suns.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_twosuns" }); images.push({ id: "one_sun", src: "one_sun.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_onesun" }); images.push({ id: "all_dash", src: "all_dash.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_nosuns" }); return { images: images }; }',
+                    'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                    'audio': 'suns_prereveal_prediction',
+                    'audioTypes': ['mp3'],
+                    'choiceRequired': true,
+                    'waitForEndAudio': true,
+                    'canMakeChoiceBeforeAudioFinished': false,
+                    'mustPlay': false,
+                    'showPreviousButton': false,
+                    'showReplayButton': true,
+                    'mustPlayCount': 0,
+                    'minDurationToAudioEnd': 0,
+                    'durationSeconds': 10,
+                    'feedbackAudio': true,
+                    'parentTextBlock': {
+                        'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                        'fontSize': 'small',
+                        'css': {
+                            'background-color': '#f8f3bf',
+                            'width': '50vw',
+                            'height': '16vh',
+                            'margin': 'auto',
+                            'bottom': '2vh',
+                            'right': '0',
+                            'left': '0',
+                            'position': 'fixed',
+                            'padding': '10px 25px',
+                            'text-align': 'center',
+                            'display': 'table-cell',
+                            'vertical-align': 'middle',
+                            'border-radius': '15px'
+                        }
+                    },
+                    'highlights': [
+                        {
+                            'range': [5, 6.25],
+                            'imageId': 'three_suns',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [6.25, 7.5],
+                            'imageId': 'two_suns',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [7.5, 8.75],
+                            'imageId': 'one_sun',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [8.75, 10],
+                            'imageId': 'all_dash',
+                            'color': 'yellow'
+                        },
+                    ]
+                },
+            
+            
+            'minority-prediction-question-confidence': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const previousFrameId = sequence[sequence.length - 1]; const clickEvents = expData[previousFrameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImageId = clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : "three_suns"; let audioFile; if (selectedImageId === "all_dash") { audioFile = "suns_prereveal_no_suns_certainty"; } else if (selectedImageId === "one_sun") { audioFile = "suns_prereveal_one_sun_certainty"; } else if (selectedImageId === "two_suns") { audioFile = "stars_prereveal_two_suns_certainty"; } else { audioFile = "stars_prereveal_three_suns_certainty"; } let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 10; const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2; images.push({ id: "not_sure", src: "not_sure.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_notsosure" }); images.push({ id: "kinda_sure", src: "kinda_sure.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_kindofsure" }); images.push({ id: "really_sure", src: "really_sure.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_reallysure" }); return { images: images, audio: audioFile }; }',
+                'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                'audioTypes': ['mp3'],
+                'choiceRequired': true,
+                'waitForEndAudio': true,
+                'canMakeChoiceBeforeAudioFinished': false,
+                'mustPlay': false,
+                'showPreviousButton': false,
+                'showReplayButton': true,
+                'mustPlayCount': 0,
+                'minDurationToAudioEnd': 0,
+                'durationSeconds': 10,
+                'feedbackAudio': true,
+                'parentTextBlock': {
+                    'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                    'fontSize': 'small',
+                    'css': {
+                        'background-color': '#f8f3bf',
+                        'width': '50vw',
+                        'height': '16vh',
+                        'margin': 'auto',
+                        'bottom': '2vh',
+                        'right': '0',
+                        'left': '0',
+                        'position': 'fixed',
+                        'padding': '10px 25px',
+                        'text-align': 'center',
+                        'display': 'table-cell',
+                        'vertical-align': 'middle',
+                        'border-radius': '15px'
+                    }
+                },
+                'highlights': [
+                    {
+                        'range': [6.5, 8],
+                        'imageId': 'not_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [8, 9.5],
+                        'imageId': 'kinda_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [9.5, 11],
+                        'imageId': 'really_sure',
+                        'color': 'yellow'
+                    }
+                ]
+            },
+                
                 'minority-reveal-suns': {
                     'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 3], sequence[sequence.length - 2], sequence[sequence.length - 1]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); const isMarked = markedPositions.some(pos => pos[0] === row && pos[1] === col); images.push({ id: cardNum, src: isSelected ? "card_sun.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
+                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 5], sequence[sequence.length - 4], sequence[sequence.length - 3]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); const isMarked = markedPositions.some(pos => pos[0] === row && pos[1] === col); images.push({ id: cardNum, src: isSelected ? "card_sun.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audio': 'cards_selection_reveal',
                     'waitForEndAudio': true,
@@ -1015,7 +1069,7 @@ function generateProtocol(child, pastSessions) {
                 
                 'minority-surprise-how': {
                     'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const lastFrameId = sequence[sequence.length - 2]; const lastFrame = expData[lastFrameId]; const clickEvents = lastFrame?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImage = clickEvents[clickEvents.length - 1]?.imageId || "not_surprised"; return { images: [{ id: "topImage", src: "selection_three_suns.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }], audio: "majority_cards_selection_how" }; }',
+                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const lastFrameId = sequence[sequence.length - 4]; const lastFrame = expData[lastFrameId]; const clickEvents = lastFrame?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImage = clickEvents[clickEvents.length - 1]?.imageId || "not_surprised"; return { images: [{ id: "topImage", src: "selection_three_suns.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }], audio: "majority_cards_selection_how" }; }',
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audioTypes': ['mp3'],
                     'choiceRequired': false,
@@ -1141,11 +1195,6 @@ function generateProtocol(child, pastSessions) {
                 
             };
 
-        // Manually add block frames
-        Object.keys(blockFrames).forEach(frameId => {
-            frames[frameId] = blockFrames[frameId];
-        });
-
 
         return {
             frames: frames,
@@ -1155,15 +1204,15 @@ function generateProtocol(child, pastSessions) {
                 'video-consent',
                 'positioning',
                 'start-recording',
-                'questions-intro',
-                ...blockSequence,
-                'questions-outro',
+                'welcome-to-my-game',
                 'majority-intro-1',
                 'majority-test-win',
                 'majority-intro-2',
                 'majority-select-1-combined',
                 'majority-select-2-combined',
                 'majority-select-3-combined',
+                'majority-prediction-question',
+                'majority-prediction-question-confidence',
                 'majority-reveal-stars',
                 'majority-surprise-rating-combined',
                 'majority-minority',
@@ -1172,6 +1221,8 @@ function generateProtocol(child, pastSessions) {
                 'minority-select-1-combined',
                 'minority-select-2-combined',
                 'minority-select-3-combined',
+                'minority-prediction-question',
+                'minority-prediction-question-confidence',
                 'minority-reveal-suns',
                 'minority-surprise-rating-combined',
                 'minority-surprise-how',
@@ -1188,137 +1239,6 @@ function generateProtocol(child, pastSessions) {
         
         
     } else {
-    // Define and shuffle the blocks
-    const blocks = ['toy', 'orange', 'crayons'];
-    const shuffledBlocks = shuffle(blocks);
-
-    // Create block frames and sequence
-    const blockFrames = {};
-    const blockSequence = [];
-    
-    shuffledBlocks.forEach(block => {
-        const unsurprisingFrameId = block + '-unsurprising';
-        const surprisingFrameId = block + '-surprising';
-        
-        blockSequence.push(unsurprisingFrameId);
-        blockSequence.push(surprisingFrameId);
-        
-        // Unsurprising frame
-        blockFrames[unsurprisingFrameId] = {
-            'kind': 'exp-lookit-images-audio',
-            'generateProperties': `function(expData, sequence, child, pastSessions) { let images = [{ id: "topImage", src: "${block}.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }]; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 6; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "not_surprised", displayDelayMs: 10000 }); images.push({ id: "little_surprised", src: "surprise_scale_a_little_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "little_surprised", displayDelayMs: 10000 }); images.push({ id: "sorta_surprised", src: "surprise_scale_sorta_surprised.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "sorta_surprised", displayDelayMs: 10000 }); images.push({ id: "very_surprised", src: "surprise_scale_very_surprised.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "very_surprised", displayDelayMs: 10000 }); return { images: images }; }`,
-            'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-            'audio': block + '_unsurprising',
-            'audioTypes': ['mp3'],
-            'choiceRequired': true,
-            'waitForEndAudio': true,
-            'canMakeChoiceBeforeAudioFinished': false,
-            'mustPlay': false,
-            'showPreviousButton': false,
-            'showReplayButton': true,
-            'feedbackAudio': true,
-            'parentTextBlock': {
-                'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices!',
-                'fontSize': 'small',
-                'css': {
-                    'background-color': '#f8f3bf',
-                    'width': '50vw',
-                    'height': '16vh',
-                    'margin': 'auto',
-                    'bottom': '2vh',
-                    'right': '0',
-                    'left': '0',
-                    'position': 'fixed',
-                    'padding': '10px 25px',
-                    'text-align': 'center',
-                    'display': 'table-cell',
-                    'vertical-align': 'middle',
-                    'border-radius': '15px'
-                }
-            },
-            'highlights': [
-                {
-                    'range': [11, 12.25],
-                    'imageId': 'not_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [12.4, 13.75],
-                    'imageId': 'little_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [13.9, 15.25],
-                    'imageId': 'sorta_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [15.4, 16.35],
-                    'imageId': 'very_surprised',
-                    'color': 'yellow'
-                }
-            ]
-        };
-        
-        // Surprising frame
-        blockFrames[surprisingFrameId] = {
-            'kind': 'exp-lookit-images-audio',
-            'generateProperties': `function(expData, sequence, child, pastSessions) { let images = [{ id: "topImage", src: "${block}.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }]; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 6; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "not_surprised", displayDelayMs: 10000 }); images.push({ id: "little_surprised", src: "surprise_scale_a_little_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "little_surprised", displayDelayMs: 10000 }); images.push({ id: "sorta_surprised", src: "surprise_scale_sorta_surprised.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "sorta_surprised", displayDelayMs: 10000 }); images.push({ id: "very_surprised", src: "surprise_scale_very_surprised.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "very_surprised", displayDelayMs: 10000 }); return { images: images }; }`,
-            'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-            'audio': block + '_surprising',
-            'audioTypes': ['mp3'],
-            'choiceRequired': true,
-            'waitForEndAudio': true,
-            'canMakeChoiceBeforeAudioFinished': false,
-            'mustPlay': false,
-            'showPreviousButton': false,
-            'showReplayButton': true,
-            'feedbackAudio': true,
-            'parentTextBlock': {
-                'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices!',
-                'fontSize': 'small',
-                'css': {
-                    'background-color': '#f8f3bf',
-                    'width': '50vw',
-                    'height': '16vh',
-                    'margin': 'auto',
-                    'bottom': '2vh',
-                    'right': '0',
-                    'left': '0',
-                    'position': 'fixed',
-                    'padding': '10px 25px',
-                    'text-align': 'center',
-                    'display': 'table-cell',
-                    'vertical-align': 'middle',
-                    'border-radius': '15px'
-                }
-            },
-            'highlights': [
-                {
-                    'range': [11, 12.25],
-                    'imageId': 'not_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [12.4, 13.75],
-                    'imageId': 'little_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [13.9, 15.25],
-                    'imageId': 'sorta_surprised',
-                    'color': 'yellow'
-                },
-                {
-                    'range': [15.4, 16.35],
-                    'imageId': 'very_surprised',
-                    'color': 'yellow'
-                }
-            ]
-        };
-    });
-
-    // Define all frames first
     const frames = {
         'welcome': {
                     'kind': 'exp-lookit-text',
@@ -1423,13 +1343,14 @@ function generateProtocol(child, pastSessions) {
                     'nextButtonText': 'Continue'
                 },
 
-                'questions-intro': {
+
+                'welcome-to-my-game': {
                     'kind': 'exp-lookit-video',
                     'video': {
                         'top': 0,
                         'left': 0,
                         'width': 100,
-                        'source': 'questions_intro',
+                        'source': 'background_welcome',
                         'loop': false
                     },
                     'backgroundColor': 'black',
@@ -1458,41 +1379,6 @@ function generateProtocol(child, pastSessions) {
                     'showPreviousButton': false,
                     'showReplayButton': true,
                     'videoTypes': ['mp4']
-                },
-
-
-                'questions-outro': {
-                    'kind': 'exp-lookit-images-audio',
-                    'generateProperties': `function(expData, sequence, child, pastSessions) { let images = []; return { images: images }; }`,
-                    'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                    'audio': 'questions_outro',
-                    'audioTypes': ['mp3'],
-                    'backgroundColor': 'black',
-                    'autoProceed': false,
-                    'parentTextBlock': {
-                        'text': '<h3 style="margin-top: 0; margin-bottom: 10px">For Parents</h3><p style="margin-top: 5px; line-height: 1.4">Click NEXT when you\'re ready to continue!</p>',
-                        'fontSize': 'small',
-                        'css': {
-                            'background-color': '#f8f3bf',
-                            'width': '50vw',
-                            'height': '16vh',
-                            'margin': 'auto',
-                            'bottom': '2vh',
-                            'right': '0',
-                            'left': '0',
-                            'position': 'fixed',
-                            'padding': '10px 25px',
-                            'text-align': 'center',
-                            'display': 'table-cell',
-                            'vertical-align': 'middle',
-                            'border-radius': '15px'
-                        }
-                    },
-                    'doRecording': false,
-                    'showPreviousButton': false,
-                    'showReplayButton': true,
-                    'waitForEndAudio': true,
-                    'canMakeChoiceBeforeAudioFinished': false
                 },
                 
                 
@@ -1721,6 +1607,120 @@ function generateProtocol(child, pastSessions) {
                             'border-radius': '15px'
                         }
                     }
+            },
+            
+            
+            'majority-prediction-question': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 5; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "three_stars", src: "three_stars.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_threestars" }); images.push({ id: "two_stars", src: "two_stars.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_twostars" }); images.push({ id: "one_star", src: "one_star.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_onestar" }); images.push({ id: "all_dash", src: "all_dash.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_nostars" }); return { images: images }; }',
+                    'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                    'audio': 'stars_prereveal_prediction',
+                    'audioTypes': ['mp3'],
+                    'choiceRequired': true,
+                    'waitForEndAudio': true,
+                    'canMakeChoiceBeforeAudioFinished': false,
+                    'mustPlay': false,
+                    'showPreviousButton': false,
+                    'showReplayButton': true,
+                    'mustPlayCount': 0,
+                    'minDurationToAudioEnd': 0,
+                    'durationSeconds': 10,
+                    'feedbackAudio': true,
+                    'parentTextBlock': {
+                        'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                        'fontSize': 'small',
+                        'css': {
+                            'background-color': '#f8f3bf',
+                            'width': '50vw',
+                            'height': '16vh',
+                            'margin': 'auto',
+                            'bottom': '2vh',
+                            'right': '0',
+                            'left': '0',
+                            'position': 'fixed',
+                            'padding': '10px 25px',
+                            'text-align': 'center',
+                            'display': 'table-cell',
+                            'vertical-align': 'middle',
+                            'border-radius': '15px'
+                        }
+                    },
+                    'highlights': [
+                        {
+                            'range': [5, 6.25],
+                            'imageId': 'three_stars',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [6.25, 7.5],
+                            'imageId': 'two_stars',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [7.5, 8.75],
+                            'imageId': 'one_star',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [8.75, 9.99],
+                            'imageId': 'all_dash',
+                            'color': 'yellow'
+                        },
+                    ]
+                },
+            
+            
+            'majority-prediction-question-confidence': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const previousFrameId = sequence[sequence.length - 1]; const clickEvents = expData[previousFrameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImageId = clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : "three_suns"; let audioFile; if (selectedImageId === "all_dash") { audioFile = "stars_prereveal_no_stars_certainty"; } else if (selectedImageId === "one_star") { audioFile = "stars_prereveal_one_star_certainty"; } else if (selectedImageId === "two_stars") { audioFile = "stars_prereveal_two_stars_certainty"; } else { audioFile = "stars_prereveal_three_stars_certainty"; } let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 10; const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2; images.push({ id: "not_sure", src: "not_sure.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_notsosure" }); images.push({ id: "kinda_sure", src: "kinda_sure.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_kindofsure" }); images.push({ id: "really_sure", src: "really_sure.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_reallysure" }); return { images: images, audio: audioFile }; }',
+                'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                'audioTypes': ['mp3'],
+                'choiceRequired': true,
+                'waitForEndAudio': true,
+                'canMakeChoiceBeforeAudioFinished': false,
+                'mustPlay': false,
+                'showPreviousButton': false,
+                'showReplayButton': true,
+                'mustPlayCount': 0,
+                'minDurationToAudioEnd': 0,
+                'durationSeconds': 10,
+                'feedbackAudio': true,
+                'parentTextBlock': {
+                    'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                    'fontSize': 'small',
+                    'css': {
+                        'background-color': '#f8f3bf',
+                        'width': '50vw',
+                        'height': '16vh',
+                        'margin': 'auto',
+                        'bottom': '2vh',
+                        'right': '0',
+                        'left': '0',
+                        'position': 'fixed',
+                        'padding': '10px 25px',
+                        'text-align': 'center',
+                        'display': 'table-cell',
+                        'vertical-align': 'middle',
+                        'border-radius': '15px'
+                    }
+                },
+                'highlights': [
+                    {
+                        'range': [7.5, 9],
+                        'imageId': 'not_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [9, 10.5],
+                        'imageId': 'kinda_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [10.5, 12],
+                        'imageId': 'really_sure',
+                        'color': 'yellow'
+                    }
+                ]
             },
 
  
@@ -2112,6 +2112,121 @@ function generateProtocol(child, pastSessions) {
                         }
                     }
                 },
+                
+                
+                
+            'minority-prediction-question': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 5; const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2; images.push({ id: "three_suns", src: "three_suns.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_threesuns" }); images.push({ id: "two_suns", src: "two_suns.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_twosuns" }); images.push({ id: "one_sun", src: "one_sun.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_onesun" }); images.push({ id: "all_dash", src: "all_dash.png", left: startX + 3 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "prereveal_nosuns" }); return { images: images }; }',
+                    'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                    'audio': 'suns_prereveal_prediction',
+                    'audioTypes': ['mp3'],
+                    'choiceRequired': true,
+                    'waitForEndAudio': true,
+                    'canMakeChoiceBeforeAudioFinished': false,
+                    'mustPlay': false,
+                    'showPreviousButton': false,
+                    'showReplayButton': true,
+                    'mustPlayCount': 0,
+                    'minDurationToAudioEnd': 0,
+                    'durationSeconds': 10,
+                    'feedbackAudio': true,
+                    'parentTextBlock': {
+                        'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                        'fontSize': 'small',
+                        'css': {
+                            'background-color': '#f8f3bf',
+                            'width': '50vw',
+                            'height': '16vh',
+                            'margin': 'auto',
+                            'bottom': '2vh',
+                            'right': '0',
+                            'left': '0',
+                            'position': 'fixed',
+                            'padding': '10px 25px',
+                            'text-align': 'center',
+                            'display': 'table-cell',
+                            'vertical-align': 'middle',
+                            'border-radius': '15px'
+                        }
+                    },
+                    'highlights': [
+                        {
+                            'range': [5, 6.25],
+                            'imageId': 'three_suns',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [6.25, 7.5],
+                            'imageId': 'two_suns',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [7.5, 8.75],
+                            'imageId': 'one_sun',
+                            'color': 'yellow'
+                        },
+                        {
+                            'range': [8.75, 10],
+                            'imageId': 'all_dash',
+                            'color': 'yellow'
+                        },
+                    ]
+                },
+            
+            
+            'minority-prediction-question-confidence': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const previousFrameId = sequence[sequence.length - 1]; const clickEvents = expData[previousFrameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImageId = clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : "three_suns"; let audioFile; if (selectedImageId === "all_dash") { audioFile = "suns_prereveal_no_suns_certainty"; } else if (selectedImageId === "one_sun") { audioFile = "suns_prereveal_one_sun_certainty"; } else if (selectedImageId === "two_suns") { audioFile = "stars_prereveal_two_suns_certainty"; } else { audioFile = "stars_prereveal_three_suns_certainty"; } let images = []; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 10; const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2; images.push({ id: "not_sure", src: "not_sure.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_notsosure" }); images.push({ id: "kinda_sure", src: "kinda_sure.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_kindofsure" }); images.push({ id: "really_sure", src: "really_sure.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "stars_prereveal_reallysure" }); return { images: images, audio: audioFile }; }',
+                'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                'audioTypes': ['mp3'],
+                'choiceRequired': true,
+                'waitForEndAudio': true,
+                'canMakeChoiceBeforeAudioFinished': false,
+                'mustPlay': false,
+                'showPreviousButton': false,
+                'showReplayButton': true,
+                'mustPlayCount': 0,
+                'minDurationToAudioEnd': 0,
+                'durationSeconds': 10,
+                'feedbackAudio': true,
+                'parentTextBlock': {
+                    'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                    'fontSize': 'small',
+                    'css': {
+                        'background-color': '#f8f3bf',
+                        'width': '50vw',
+                        'height': '16vh',
+                        'margin': 'auto',
+                        'bottom': '2vh',
+                        'right': '0',
+                        'left': '0',
+                        'position': 'fixed',
+                        'padding': '10px 25px',
+                        'text-align': 'center',
+                        'display': 'table-cell',
+                        'vertical-align': 'middle',
+                        'border-radius': '15px'
+                    }
+                },
+                'highlights': [
+                    {
+                        'range': [6.5, 8],
+                        'imageId': 'not_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [8, 9.5],
+                        'imageId': 'kinda_sure',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [9.5, 11],
+                        'imageId': 'really_sure',
+                        'color': 'yellow'
+                    }
+                ]
+            },
             
                 'minority-reveal-suns': {
                     'kind': 'exp-lookit-images-audio',
@@ -2358,12 +2473,6 @@ function generateProtocol(child, pastSessions) {
         
             };
 
-            // Add block frames to main frames object
-            Object.keys(blockFrames).forEach(frameId => {
-                frames[frameId] = blockFrames[frameId];
-            });
-
-        // Now we can return using the defined frames object
         return {
             frames: frames,
             sequence: [
@@ -2372,15 +2481,15 @@ function generateProtocol(child, pastSessions) {
                 'video-consent',
                 'positioning',
                 'start-recording',
-                'questions-intro',
-                ...blockSequence,
-                'questions-outro',
+                'welcome-to-my-game',
                 'majority-intro-1',
                 'majority-test-win',
                 'majority-intro-2',
                 'majority-select-1-combined',
                 'majority-select-2-combined',
                 'majority-select-3-combined',
+                'majority-prediction-question',
+                'majority-prediction-question-confidence',
                 'majority-reveal-stars',
                 'majority-surprise-rating-combined',
                 'majority-minority',
@@ -2389,6 +2498,8 @@ function generateProtocol(child, pastSessions) {
                 'minority-select-1-combined',
                 'minority-select-2-combined',
                 'minority-select-3-combined',
+                'minority-prediction-question',
+                'minority-prediction-question-confidence',
                 'minority-reveal-suns',
                 'minority-surprise-rating-combined',
                 'minority-surprise-how',
