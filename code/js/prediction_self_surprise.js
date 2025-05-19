@@ -5,7 +5,6 @@ function generateProtocol(child, pastSessions) {
     console.log('Condition:', condition);
 
     if (condition === 'surprising') {
-        // Create the frames object
         const frames = {
                 'welcome': {
                     'kind': 'exp-lookit-text',
@@ -215,8 +214,8 @@ function generateProtocol(child, pastSessions) {
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audio': 'majority_cards_control_question',
                     'audioTypes': ['mp3'],
-                    'choiceRequired': true,        // This needs to be true for correctChoiceRequired to work
-                    'correctChoice': 'star',          // The ID of the correct image
+                    'choiceRequired': true,
+                    'correctChoice': 'star',
                     'correctChoiceRequired': true,
                     'feedbackAudio': true,
                     'nextButtonEnabled': false,
@@ -1239,7 +1238,7 @@ function generateProtocol(child, pastSessions) {
         
         
     } else {
-    const frames = {
+        const frames = {
         'welcome': {
                     'kind': 'exp-lookit-text',
                     'blocks': [
