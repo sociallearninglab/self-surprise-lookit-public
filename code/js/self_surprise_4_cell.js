@@ -1800,54 +1800,54 @@ function generateProtocol(child, pastSessions) {
             
             
             'minority-surprise-rating-combined': {
-                    'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { let images = [{ id: "topImage", src: "selection_three_suns.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }]; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 10; const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2; images.push({ id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "not_surprised" }); images.push({ id: "a_little_surprised", src: "surprise_scale_a_little_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "a_little_surprised" }); images.push({ id: "very_surprised", src: "surprise_scale_very_surprised.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "very_surprised" }); return { images: images, audio: "suns_surprise_scale" }; }',
-                    'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                    'audioTypes': ['mp3'],
-                    'choiceRequired': true,
-                    'waitForEndAudio': true,
-                    'canMakeChoiceBeforeAudioFinished': false,
-                    'mustPlay': false,
-                    'showPreviousButton': false,
-                    'showReplayButton': true,
-                    'feedbackAudio': true,
-                    'parentTextBlock': {
-                            'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
-                            'fontSize': 'small',
-                            'css': {
-                                'background-color': '#f8f3bf',
-                                'width': '50vw',
-                                'height': '16vh',
-                                'margin': 'auto',
-                                'bottom': '2vh',
-                                'right': '0',
-                                'left': '0',
-                                'position': 'fixed',
-                                'padding': '10px 25px',
-                                'text-align': 'center',
-                                'display': 'table-cell',
-                                'vertical-align': 'middle',
-                                'border-radius': '15px'
-                            }
-                        },
-                    'highlights': [
-                        {
-                            'range': [5, 7],
-                            'imageId': 'not_surprised',
-                            'color': 'yellow'
-                        },
-                        {
-                            'range': [7, 9],
-                            'imageId': 'a_little_surprised',
-                            'color': 'yellow'
-                        },
-                        {
-                            'range': [9, 10.9],
-                            'imageId': 'very_surprised',
-                            'color': 'yellow'
-                        }
-                    ]
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const frameIds = [sequence[sequence.length - 5], sequence[sequence.length - 4], sequence[sequence.length - 3]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / 6); const col = pos % 6; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length; let audioFile; let topImageFile; if (correctSelections === 3) { audioFile = "threesuns_surprise_scale"; topImageFile = "three_suns.png"; } else if (correctSelections === 2) { audioFile = "twosuns_surprise_scale"; topImageFile = "two_suns.png"; } else if (correctSelections === 1) { audioFile = "onesun_surprise_scale"; topImageFile = "one_sun.png"; } else { audioFile = "nosuns_surprise_scale"; topImageFile = "all_dash.png"; } let images = [{ id: "topImage", src: topImageFile, left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }]; const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 10; const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2; images.push({ id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "not_surprised" }); images.push({ id: "a_little_surprised", src: "surprise_scale_a_little_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "a_little_surprised" }); images.push({ id: "very_surprised", src: "surprise_scale_very_surprised.png", left: startX + 2 * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight, correct: true, feedbackAudio: "very_surprised" }); return { images: images, audio: audioFile }; }',
+                'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                'audioTypes': ['mp3'],
+                'choiceRequired': true,
+                'waitForEndAudio': true,
+                'canMakeChoiceBeforeAudioFinished': false,
+                'mustPlay': false,
+                'showPreviousButton': false,
+                'showReplayButton': true,
+                'feedbackAudio': true,
+                'parentTextBlock': {
+                    'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                    'fontSize': 'small',
+                    'css': {
+                        'background-color': '#f8f3bf',
+                        'width': '50vw',
+                        'height': '16vh',
+                        'margin': 'auto',
+                        'bottom': '2vh',
+                        'right': '0',
+                        'left': '0',
+                        'position': 'fixed',
+                        'padding': '10px 25px',
+                        'text-align': 'center',
+                        'display': 'table-cell',
+                        'vertical-align': 'middle',
+                        'border-radius': '15px'
+                    }
                 },
+                'highlights': [
+                    {
+                        'range': [2.5, 4.25],
+                        'imageId': 'not_surprised',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [4.25, 6],
+                        'imageId': 'a_little_surprised',
+                        'color': 'yellow'
+                    },
+                    {
+                        'range': [6, 7.25],
+                        'imageId': 'very_surprised',
+                        'color': 'yellow'
+                    }
+                ]
+            },
 
              "explore-more-test": {
                 "kind": "exp-lookit-images-audio",
