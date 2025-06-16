@@ -775,7 +775,7 @@ function generateProtocol(child, pastSessions) {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 4], sequence[sequence.length - 3], sequence[sequence.length - 2]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); images.push({ id: cardNum, src: isSelected ? "card_sun.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'minority_cards_reveal_all_three_suns_how_did_you_select',
+                'audio': 'minority_cards_selection_allthreesuns',
                 'waitForEndAudio': true,
                 'canMakeChoiceBeforeAudioFinished': false,
                 'mustPlay': false,
@@ -806,7 +806,6 @@ function generateProtocol(child, pastSessions) {
                 'audioTypes': ['mp3'],
                 'autoProceed': false
             },
-            
             
             
 
@@ -859,6 +858,42 @@ function generateProtocol(child, pastSessions) {
                         }
                     ]
                 },
+
+            'minority-reveal-suns-how-select': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 6], sequence[sequence.length - 5], sequence[sequence.length - 4]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); images.push({ id: cardNum, src: isSelected ? "card_sun.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
+                'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                'audio': 'majority_cards_selection_how',
+                'waitForEndAudio': true,
+                'canMakeChoiceBeforeAudioFinished': false,
+                'mustPlay': false,
+                'showReplayButton': true,
+                'showPreviousButton': false,
+                'mustPlayCount': 0,
+                'durationSeconds': 10,
+                'parentTextBlock': {
+                        'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                        'fontSize': 'small',
+                        'css': {
+                            'background-color': '#f8f3bf',
+                            'width': '50vw',
+                            'height': '16vh',
+                            'margin': 'auto',
+                            'bottom': '2vh',
+                            'right': '0',
+                            'left': '0',
+                            'position': 'fixed',
+                            'padding': '10px 25px',
+                            'text-align': 'center',
+                            'display': 'table-cell',
+                            'vertical-align': 'middle',
+                            'border-radius': '15px'
+                        }
+                    },
+                'minDurationToAudioEnd': 0,
+                'audioTypes': ['mp3'],
+                'autoProceed': false
+            },
 
 
              "explore-more-test": {
@@ -986,6 +1021,7 @@ function generateProtocol(child, pastSessions) {
             'minority-select-3-combined',
             'minority-reveal-suns',
             'minority-surprise-rating-combined',
+            'minority-reveal-suns-how-select',
             'explore-more-test',
             'broken-game',
             'final-thank-you',
@@ -1765,7 +1801,7 @@ function generateProtocol(child, pastSessions) {
 
             'minority-reveal-suns': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const frameIds = [sequence[sequence.length - 4], sequence[sequence.length - 3], sequence[sequence.length - 2]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / 6); const col = pos % 6; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length; const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); const isMarked = markedPositions.some(pos => pos[0] === row && pos[1] === col); images.push({ id: cardNum, src: isSelected ? (isMarked ? "card_sun.png" : "card_dash.png") : (isMarked ? "card_back_with_marker.png" : "card_back.png"), left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } let audioFile; if (correctSelections === 3) { audioFile = "minority_cards_reveal_all_three_suns_how_did_you_select"; } else if (correctSelections === 2) { audioFile = "minority_cards_reveal_two_suns_how_did_you_select"; } else if (correctSelections === 1) { audioFile = "minority_cards_reveal_one_sun_how_did_you_select"; } else { audioFile = "minority_cards_reveal_no_sun_how_did_you_select"; } return { images: images, audio: audioFile }; }',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const frameIds = [sequence[sequence.length - 4], sequence[sequence.length - 3], sequence[sequence.length - 2]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / 6); const col = pos % 6; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length; const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); const isMarked = markedPositions.some(pos => pos[0] === row && pos[1] === col); images.push({ id: cardNum, src: isSelected ? (isMarked ? "card_sun.png" : "card_dash.png") : (isMarked ? "card_back_with_marker.png" : "card_back.png"), left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } let audioFile; if (correctSelections === 3) { audioFile = "minority_cards_selection_allthreesuns"; } else if (correctSelections === 2) { audioFile = "minority_cards_selection_twosuns"; } else if (correctSelections === 1) { audioFile = "minority_cards_selection_onesun"; } else { audioFile = "minority_cards_selection_nosuns"; } return { images: images, audio: audioFile }; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'waitForEndAudio': true,
                 'canMakeChoiceBeforeAudioFinished': false,
@@ -1847,6 +1883,41 @@ function generateProtocol(child, pastSessions) {
                         'color': 'yellow'
                     }
                 ]
+            },
+
+            'minority-reveal-suns-how-select': {
+                'kind': 'exp-lookit-images-audio',
+                'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const frameIds = [sequence[sequence.length - 6], sequence[sequence.length - 5], sequence[sequence.length - 4]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); const isMarked = markedPositions.some(pos => pos[0] === row && pos[1] === col); images.push({ id: cardNum, src: isSelected ? (isMarked ? "card_sun.png" : "card_dash.png") : (isMarked ? "card_back_with_marker.png" : "card_back.png"), left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images, audio: "majority_cards_selection_how" }; }',
+                'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
+                'waitForEndAudio': true,
+                'canMakeChoiceBeforeAudioFinished': false,
+                'mustPlay': false,
+                'showReplayButton': true,
+                'showPreviousButton': false,
+                'mustPlayCount': 0,
+                'durationSeconds': 10,
+                'parentTextBlock': {
+                    'text': '<b>FOR PARENTS</b>: \nPlease let your children make their own choices! You can replay the prompt or help to control the mouse, but please do not choose for them. Click NEXT when prompted.',
+                    'fontSize': 'small',
+                    'css': {
+                        'background-color': '#f8f3bf',
+                        'width': '50vw',
+                        'height': '16vh',
+                        'margin': 'auto',
+                        'bottom': '2vh',
+                        'right': '0',
+                        'left': '0',
+                        'position': 'fixed',
+                        'padding': '10px 25px',
+                        'text-align': 'center',
+                        'display': 'table-cell',
+                        'vertical-align': 'middle',
+                        'border-radius': '15px'
+                    }
+                },
+                'minDurationToAudioEnd': 0,
+                'audioTypes': ['mp3'],
+                'autoProceed': false
             },
 
              "explore-more-test": {
@@ -1974,6 +2045,7 @@ function generateProtocol(child, pastSessions) {
             'minority-select-3-combined',
             'minority-reveal-suns',
             'minority-surprise-rating-combined',
+            'minority-reveal-suns-how-select',
             'explore-more-test',
             'broken-game',
             'final-thank-you',
@@ -2924,7 +2996,7 @@ function generateProtocol(child, pastSessions) {
 
                 'minority-prediction-reveal-transition': {
                     'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const previousFrameId = sequence[sequence.length - 1]; const clickEvents = expData[previousFrameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImageId = clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : "kinda_sure"; let selectedImageSrc = ""; switch (selectedImageId) { case "not_sure": selectedImageSrc = "not_sure.png"; break; case "kinda_sure": selectedImageSrc = "kinda_sure.png"; break; case "really_sure": selectedImageSrc = "really_sure.png"; break; default: selectedImageSrc = "kinda_sure.png"; } const imageWidth = 20; const imageHeight = 35; const centeredImage = { id: selectedImageId, src: selectedImageSrc, left: (100 - imageWidth) / 2, top: (100 - imageHeight) / 2, width: imageWidth, height: imageHeight }; return { images: [centeredImage], audio: "cards_selection_alldone" }; }',
+                    'generateProperties': 'function(expData, sequence, child, pastSessions) { return { images: [], audio: "cards_selection_alldone" }; }',
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audioTypes': ['mp3'],
                     'choiceRequired': false,
@@ -2935,7 +3007,7 @@ function generateProtocol(child, pastSessions) {
                     'showReplayButton': true,
                     'mustPlayCount': 0,
                     'minDurationToAudioEnd': 0,
-                    'durationSeconds': 5,
+                    'durationSeconds': 3,
                     'feedbackAudio': false,
                     'parentTextBlock': {
                         'text': '<b>FOR PARENTS</b>: Click NEXT when prompted.',
@@ -2960,7 +3032,7 @@ function generateProtocol(child, pastSessions) {
     
                 'minority-reveal-suns': {
                     'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 7], sequence[sequence.length - 6], sequence[sequence.length - 5]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); images.push({ id: cardNum, src: isSelected ? "card_sun.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
+                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; const frameIds = [sequence[sequence.length - 6], sequence[sequence.length - 5], sequence[sequence.length - 4]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); images.push({ id: cardNum, src: isSelected ? "card_sun.png" : "card_back.png", left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } return { images: images }; }',
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audio': 'minority_cards_reveal_all_three_suns_how_did_you_select',
                     'waitForEndAudio': true,
@@ -4099,7 +4171,7 @@ function generateProtocol(child, pastSessions) {
 
                 'minority-prediction-reveal-transition': {
                     'kind': 'exp-lookit-images-audio',
-                    'generateProperties': 'function(expData, sequence, child, pastSessions) { const previousFrameId = sequence[sequence.length - 1]; const clickEvents = expData[previousFrameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; const selectedImageId = clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : "kinda_sure"; let selectedImageSrc = ""; switch (selectedImageId) { case "not_sure": selectedImageSrc = "not_sure.png"; break; case "kinda_sure": selectedImageSrc = "kinda_sure.png"; break; case "really_sure": selectedImageSrc = "really_sure.png"; break; default: selectedImageSrc = "kinda_sure.png"; } const imageWidth = 20; const imageHeight = 35; const centeredImage = { id: selectedImageId, src: selectedImageSrc, left: (100 - imageWidth) / 2, top: (100 - imageHeight) / 2, width: imageWidth, height: imageHeight }; return { images: [centeredImage], audio: "cards_selection_alldone" }; }',
+                    'generateProperties': 'function(expData, sequence, child, pastSessions) { return { images: [], audio: "cards_selection_alldone" }; }',
                     'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                     'audioTypes': ['mp3'],
                     'choiceRequired': false,
@@ -4110,7 +4182,7 @@ function generateProtocol(child, pastSessions) {
                     'showReplayButton': true,
                     'mustPlayCount': 0,
                     'minDurationToAudioEnd': 0,
-                    'durationSeconds': 5,
+                    'durationSeconds': 3,
                     'feedbackAudio': false,
                     'parentTextBlock': {
                         'text': '<b>FOR PARENTS</b>: Click NEXT when prompted.',
@@ -4135,7 +4207,7 @@ function generateProtocol(child, pastSessions) {
     
                     'minority-reveal-suns': {
                         'kind': 'exp-lookit-images-audio',
-                        'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const frameIds = [sequence[sequence.length - 7], sequence[sequence.length - 6], sequence[sequence.length - 5]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents[clickEvents.length - 1]?.imageId; }).filter(id => id !== undefined); const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / 6); const col = pos % 6; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length; const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); const isMarked = markedPositions.some(pos => pos[0] === row && pos[1] === col); images.push({ id: cardNum, src: isSelected ? (isMarked ? "card_sun.png" : "card_dash.png") : (isMarked ? "card_back_with_marker.png" : "card_back.png"), left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } let audioFile; if (correctSelections === 3) { audioFile = "minority_cards_reveal_all_three_suns_how_did_you_select"; } else if (correctSelections === 2) { audioFile = "minority_cards_reveal_two_suns_how_did_you_select"; } else if (correctSelections === 1) { audioFile = "minority_cards_reveal_one_sun_how_did_you_select"; } else { audioFile = "minority_cards_reveal_no_sun_how_did_you_select"; } return { images: images, audio: audioFile }; }',
+                        'generateProperties': 'function(expData, sequence, child, pastSessions) { const markedPositions = [[0,1], [0,4], [1,1]]; const frameIds = [sequence[sequence.length - 6], sequence[sequence.length - 5], sequence[sequence.length - 4]]; const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : undefined; }).filter(id => id !== undefined); const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / 6); const col = pos % 6; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length; const cardWidth = 15; const cardHeight = 35; const cardsPerRow = 6; const totalRows = 2; const horizontalSpacing = 16; const verticalSpacing = 40; const totalWidth = (cardsPerRow * cardWidth) + ((cardsPerRow - 1) * (horizontalSpacing - cardWidth)); const totalHeight = (totalRows * cardHeight) + ((totalRows - 1) * (verticalSpacing - cardHeight)); const startLeft = (100 - totalWidth) / 2; const startTop = 5; let images = []; for (let i = 0; i < 12; i++) { const row = Math.floor(i / 6); const col = i % 6; const cardNum = String(i + 1); const isSelected = selections.includes(cardNum); const isMarked = markedPositions.some(pos => pos[0] === row && pos[1] === col); images.push({ id: cardNum, src: isSelected ? (isMarked ? "card_sun.png" : "card_dash.png") : (isMarked ? "card_back_with_marker.png" : "card_back.png"), left: startLeft + (col * horizontalSpacing), top: startTop + (row * verticalSpacing), width: cardWidth, height: cardHeight, nonChoiceOption: true }); } let audioFile; if (correctSelections === 3) { audioFile = "minority_cards_reveal_all_three_suns_how_did_you_select"; } else if (correctSelections === 2) { audioFile = "minority_cards_reveal_two_suns_how_did_you_select"; } else if (correctSelections === 1) { audioFile = "minority_cards_reveal_one_sun_how_did_you_select"; } else { audioFile = "minority_cards_reveal_no_sun_how_did_you_select"; } return { images: images, audio: audioFile }; }',
                         'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                         'waitForEndAudio': true,
                         'canMakeChoiceBeforeAudioFinished': false,
