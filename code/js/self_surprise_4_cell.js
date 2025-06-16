@@ -12,7 +12,7 @@ function generateProtocol(child, pastSessions) {
                             'title': 'Welcome!'
                         },
                         {
-                            'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!'
+                            'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!\''
                         },
                         {
                             'text': 'Here\'s a quick summary of what\'s about to happen:'
@@ -21,7 +21,7 @@ function generateProtocol(child, pastSessions) {
                             'text': '1. Webcam Setup and Video Consent: First, we\'ll be checking that your webcam is working. Then you and your child will give your consent to participate in this research.'
                         },
                         {
-                            'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 15 minutes in total.'
+                            'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 10 minutes in total.'
                         },
                         {
                             'text': 'Thank you so much for helping us with our science! We hope you have fun.'
@@ -504,9 +504,9 @@ function generateProtocol(child, pastSessions) {
                         }
                     },
                     'highlights': [
-                        { 'range': [4.75, 5.75], 'imageId': 'not_surprised', 'color': 'yellow' },
-                        { 'range': [6.75, 7.75], 'imageId': 'a_little_surprised', 'color': 'yellow' },
-                        { 'range': [8.75, 9.75], 'imageId': 'very_surprised', 'color': 'yellow' }
+                        { 'range': [5, 6.26], 'imageId': 'not_surprised', 'color': 'yellow' },
+                        { 'range': [7, 7.25], 'imageId': 'a_little_surprised', 'color': 'yellow' },
+                        { 'range': [9, 9.25], 'imageId': 'very_surprised', 'color': 'yellow' }
                     ]
                 },
 
@@ -843,17 +843,17 @@ function generateProtocol(child, pastSessions) {
                         },
                     'highlights': [
                         {
-                            'range': [5, 7],
+                            'range': [5, 6.5],
                             'imageId': 'not_surprised',
                             'color': 'yellow'
                         },
                         {
-                            'range': [7, 9],
+                            'range': [7, 8.5],
                             'imageId': 'a_little_surprised',
                             'color': 'yellow'
                         },
                         {
-                            'range': [9, 10.9],
+                            'range': [9, 10.5],
                             'imageId': 'very_surprised',
                             'color': 'yellow'
                         }
@@ -1005,7 +1005,7 @@ function generateProtocol(child, pastSessions) {
                             'title': 'Welcome!'
                         },
                         {
-                            'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!'
+                            'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!\''
                         },
                         {
                             'text': 'Here\'s a quick summary of what\'s about to happen:'
@@ -1014,7 +1014,7 @@ function generateProtocol(child, pastSessions) {
                             'text': '1. Webcam Setup and Video Consent: First, we\'ll be checking that your webcam is working. Then you and your child will give your consent to participate in this research.'
                         },
                         {
-                            'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 15 minutes in total.'
+                            'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 10 minutes in total.'
                         },
                         {
                             'text': 'Thank you so much for helping us with our science! We hope you have fun.'
@@ -1832,17 +1832,17 @@ function generateProtocol(child, pastSessions) {
                 },
                 'highlights': [
                     {
-                        'range': [2.5, 4.25],
+                        'range': [5, 6.5],
                         'imageId': 'not_surprised',
                         'color': 'yellow'
                     },
                     {
-                        'range': [4.25, 6],
+                        'range': [7, 8.5],
                         'imageId': 'a_little_surprised',
                         'color': 'yellow'
                     },
                     {
-                        'range': [6, 7.25],
+                        'range': [9, 10.5],
                         'imageId': 'very_surprised',
                         'color': 'yellow'
                     }
@@ -1991,7 +1991,7 @@ function generateProtocol(child, pastSessions) {
                                 'title': 'Welcome!'
                             },
                             {
-                                'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!'
+                                'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!\''
                             },
                             {
                                 'text': 'Here\'s a quick summary of what\'s about to happen:'
@@ -2000,7 +2000,7 @@ function generateProtocol(child, pastSessions) {
                                 'text': '1. Webcam Setup and Video Consent: First, we\'ll be checking that your webcam is working. Then you and your child will give your consent to participate in this research.'
                             },
                             {
-                                'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 15 minutes in total.'
+                                'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 10 minutes in total.'
                             },
                             {
                                 'text': 'Thank you so much for helping us with our science! We hope you have fun.'
@@ -3146,7 +3146,7 @@ function generateProtocol(child, pastSessions) {
                 'minority-select-3',
                 'minority-select-3-combined',
                 'minority-prediction-question',
-                'minority-prediction-question-confidence',
+                // 'minority-prediction-question-confidence',
                 'minority-prediction-reveal-transition',
                 'minority-reveal-suns',
                 'explore-more-test',
@@ -3166,7 +3166,7 @@ function generateProtocol(child, pastSessions) {
                                 'title': 'Welcome!'
                             },
                             {
-                                'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!'
+                                'text': 'Thank you for your interest in our study, \'Let\'s Play With Cards!\''
                             },
                             {
                                 'text': 'Here\'s a quick summary of what\'s about to happen:'
@@ -3175,7 +3175,7 @@ function generateProtocol(child, pastSessions) {
                                 'text': '1. Webcam Setup and Video Consent: First, we\'ll be checking that your webcam is working. Then you and your child will give your consent to participate in this research.'
                             },
                             {
-                                'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 15 minutes in total.'
+                                'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 10 minutes in total.'
                             },
                             {
                                 'text': 'Thank you so much for helping us with our science! We hope you have fun.'
@@ -4321,7 +4321,7 @@ function generateProtocol(child, pastSessions) {
                 'minority-select-3',
                 'minority-select-3-combined',
                 'minority-prediction-question',
-                'minority-prediction-question-confidence',
+                // 'minority-prediction-question-confidence',
                 'minority-prediction-reveal-transition',
                 'minority-reveal-suns',
                 'explore-more-test',
