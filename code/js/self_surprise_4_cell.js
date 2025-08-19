@@ -154,7 +154,7 @@ function generateProtocol(child, pastSessions) {
             },
             'minority-intro': {
                 'kind': 'exp-lookit-video',
-                'video': { 'source': 'majority_minority_no_majority' },
+                'video': { 'source': 'game_intro_1' },
                 'backgroundColor': 'black',
                 'autoProceed': true,
                 'parentTextBlock': parentTextBlock,
@@ -181,7 +181,7 @@ function generateProtocol(child, pastSessions) {
             },
             'minority-intro-2-surprising': {
                 'kind': 'exp-lookit-video',
-                'video': { 'source': 'minority_surprising_2' },
+                'video': { 'source': 'game_intro_2_surprising' },
                 'backgroundColor': 'black',
                 'autoProceed': false,
                 'doRecording': false,
@@ -462,7 +462,7 @@ function generateProtocol(child, pastSessions) {
             },
             'minority-intro': {
                 'kind': 'exp-lookit-video',
-                'video': { 'source': 'majority_minority_no_majority' },
+                'video': { 'source': 'game_intro_1' },
                 'backgroundColor': 'black',
                 'autoProceed': true,
                 'parentTextBlock': parentTextBlock,
@@ -489,7 +489,7 @@ function generateProtocol(child, pastSessions) {
             },
             'minority-intro-2-unsurprising': {
                 'kind': 'exp-lookit-video',
-                'video': { 'source': 'minority_unsurprising_2' },
+                'video': { 'source': 'game_intro_2_unsurprising' },
                 'backgroundColor': 'black',
                 'autoProceed': false,
                 'doRecording': false,
