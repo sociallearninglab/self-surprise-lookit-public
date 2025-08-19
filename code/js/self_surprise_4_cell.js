@@ -164,9 +164,9 @@ function generateProtocol(child, pastSessions) {
             },
             'minority-test-win': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function() { let images = []; const centerOffset = 15; const spacing = 50; images.push({ id: "star", src: "card_star.png", left: centerOffset, top: 30, width: 15, height: 35, correct: true, feedbackAudio: "majority_cards_control_question_correct" }); images.push({ id: "dash", src: "card_dash.png", left: centerOffset + spacing, top: 30, width: 15, height: 35, correct: false, feedbackAudio: "majority_cards_control_question_incorrect" }); return { images: images }; }',
+                'generateProperties': 'function() { let images = []; const centerOffset = 15; const spacing = 50; images.push({ id: "star", src: "card_star.png", left: centerOffset, top: 30, width: 15, height: 35, correct: true, feedbackAudio: "control_question_correct" }); images.push({ id: "dash", src: "card_dash.png", left: centerOffset + spacing, top: 30, width: 15, height: 35, correct: false, feedbackAudio: "control_question_incorrect" }); return { images: images }; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'majority_cards_control_question',
+                'audio': 'control_question',
                 'audioTypes': ['mp3'],
                 'choiceRequired': true,
                 'correctChoice': 'star',
@@ -175,8 +175,8 @@ function generateProtocol(child, pastSessions) {
                 'nextButtonDelay': 'feedbackAudioEnd',
                 'parentTextBlock': parentTextBlock,
                 'highlights': [
-                    { 'range': [6, 7.75], 'imageId': 'star', 'color': 'blue' },
-                    { 'range': [7.75, 9.99], 'imageId': 'dash', 'color': 'blue' }
+                    { 'range': [8, 10], 'imageId': 'star', 'color': 'blue' },
+                    { 'range': [13, 15], 'imageId': 'dash', 'color': 'blue' }
                 ]
             },
             'minority-intro-2-surprising': {
@@ -232,39 +232,32 @@ function generateProtocol(child, pastSessions) {
             'minority-prediction-question': {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': `function() {
-                    const options = [
+                    const baseOptions = [
                         { id: "three_stars", src: "three_stars.png", feedbackAudio: "prereveal_threestars" },
                         { id: "two_stars", src: "two_stars.png", feedbackAudio: "prereveal_twostars" },
                         { id: "one_star", src: "one_star.png", feedbackAudio: "prereveal_onestar" },
                         { id: "all_dash", src: "all_dash.png", feedbackAudio: "prereveal_nostars" }
                     ];
-                    if (${isFlipped}) {
-                        options.reverse();
-                    }
+                    const baseHighlights = [
+                        { 'range': [2.75, 4], 'color': 'yellow' },
+                        { 'range': [4, 5.25], 'color': 'yellow' },
+                        { 'range': [5.25, 6.5], 'color': 'yellow' },
+                        { 'range': [6.5, 7.75], 'color': 'yellow' }
+                    ];
+                    const orderedOptions = ${isFlipped} ? [...baseOptions].reverse() : baseOptions;
                     const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 5;
                     const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2;
-                    let images = options.map((option, index) => ({
-                        ...option,
-                        left: startX + index * (ratingWidth + spacing),
-                        top: ratingY,
-                        width: ratingWidth,
-                        height: ratingHeight
-                    }));
-                    return { images: images };
+                    let images = orderedOptions.map((option, index) => ({ ...option, left: startX + index * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight }));
+                    const audio = ${isFlipped} ? 'stars_prereveal_prediction_flipped' : 'stars_prereveal_prediction';
+                    const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
+                    return { images: images, audio: audio, highlights: highlights };
                 }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'stars_prereveal_prediction',
                 'audioTypes': ['mp3'],
                 'choiceRequired': true,
                 'waitForEndAudio': true,
                 'feedbackAudio': true,
-                'parentTextBlock': parentTextBlock,
-                'highlights': [
-                    { 'range': [5, 6.25], 'imageId': 'three_stars', 'color': 'yellow' },
-                    { 'range': [6.25, 7.5], 'imageId': 'two_stars', 'color': 'yellow' },
-                    { 'range': [7.5, 8.75], 'imageId': 'one_star', 'color': 'yellow' },
-                    { 'range': [8.75, 9.99], 'imageId': 'all_dash', 'color': 'yellow' }
-                ]
+                'parentTextBlock': parentTextBlock
             },
             'minority-prediction-reveal-transition': {
                 'kind': 'exp-lookit-images-audio',
@@ -290,19 +283,22 @@ function generateProtocol(child, pastSessions) {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': `function() {
                     let images = [{ id: "topImage", src: "selection_three_stars.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
+                    const baseOptions = [
+                        { id: "surprised", src: "surprise_scale_a_little_surprised.png", feedbackAudio: "surprised" },
+                        { id: "not_surprised", src: "surprise_scale_not_surprised.png", feedbackAudio: "not_surprised" }
+                    ];
+                    const baseHighlights = [ { 'range': [5, 7], 'color': 'yellow' }, { 'range': [7, 9], 'color': 'yellow' } ];
+                    const orderedOptions = ${isFlipped} ? [...baseOptions].reverse() : baseOptions;
                     const ratingWidth = 25; const ratingHeight = 40; const ratingY = 50; const spacing = 20;
                     const startX = (100 - (2 * ratingWidth + spacing)) / 2;
-                    const surprisedOption = { id: "surprised", src: "surprise_scale_a_little_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, feedbackAudio: "pretty_surprised" };
-                    const notSurprisedOption = { id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, feedbackAudio: "not_surprised" };
-                    if (${isFlipped}) {
-                        images.push(notSurprisedOption, surprisedOption);
-                    } else {
-                        images.push(surprisedOption, notSurprisedOption);
-                    }
-                    return { images: images };
+                    orderedOptions.forEach((option, index) => {
+                        images.push({ ...option, left: startX + index * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight });
+                    });
+                    const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
+                    const audio = ${isFlipped} ? 'allthreestars_surprise_scale_flipped' : 'allthreestars_surprise_scale';
+                    return { images: images, highlights: highlights };
                 }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'allthreestars_surprise_scale',
                 'audioTypes': ['mp3'],
                 'choiceRequired': true,
                 'waitForEndAudio': true,
@@ -313,23 +309,28 @@ function generateProtocol(child, pastSessions) {
             'surprise-rating-graded-surprising': {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': `function(expData, sequence) {
-                    const options = [
+                    const baseOptions = [
                         { id: "a_little_surprised", src: "surprise_scale_a_little_surprised.png", feedbackAudio: "a_little_surprised" },
                         { id: "pretty_surprised", src: "surprise_scale_sorta_surprised.png", feedbackAudio: "pretty_surprised" },
                         { id: "very_surprised", src: "surprise_scale_very_surprised.png", feedbackAudio: "very_surprised" }
                     ];
-                    if (${isFlipped}) {
-                        options.reverse();
-                    }
+                    const baseHighlights = [
+                        { 'range': [4, 6], 'color': 'yellow' },
+                        { 'range': [6, 8], 'color': 'yellow' },
+                        { 'range': [8, 10], 'color': 'yellow' }
+                    ];
+                    const orderedOptions = ${isFlipped} ? [...baseOptions].reverse() : baseOptions;
                     let images = [{ id: "topImage", src: "selection_three_stars.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
-                    const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 5;
+                    const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 10;
                     const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2;
-                    options.forEach((option, index) => {
+                    orderedOptions.forEach((option, index) => {
                         images.push({ ...option, left: startX + index * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight });
                     });
-                    const prevFrameId = sequence[sequence.length - 1]; const prevChoice = expData[prevFrameId]?.selectedImage;
-                    const audioFile = (prevChoice === "not_surprised") ? "not_surprised_graded" : "surprised_graded";
-                    return { images: images, audio: audioFile };
+                    const prevFrameId = sequence[sequence.length - 1];
+                    const prevChoice = expData[prevFrameId]?.selectedImage;
+                    const audioFile = (prevChoice === "not_surprised") ? "not_surprised_followup" : (${isFlipped} ? "surprised_followup_flipped" : "surprised_followup");
+                    const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
+                    return { images: images, audio: audioFile, highlights: highlights };
                 }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audioTypes': ['mp3'],
@@ -353,7 +354,7 @@ function generateProtocol(child, pastSessions) {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': 'function() { return { images: [] }; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'majority_cards_selection_how',
+                'audio': 'card_selection_how',
                 'audioTypes': ['mp3'],
                 'choiceRequired': false,
                 'waitForEndAudio': true,
@@ -361,44 +362,6 @@ function generateProtocol(child, pastSessions) {
                 'durationSeconds': 15,
                 'parentTextBlock': parentTextBlock
             },
-            "explore-more-test": {
-                    "kind": "exp-lookit-images-audio",
-                    "generateProperties": "function(expData, sequence, child, pastSessions) { let images = []; const centerOffset = 15; const spacing = 50; images.push({ id: 'same', src: 'cards_sun_dash.png', left: centerOffset, top: 30, width: 25, height: 45, feedbackAudio: 'exploration_choice_cards' }); images.push({ id: 'done', src: 'question_mark.png', left: centerOffset + spacing, top: 30, width: 25, height: 45, feedbackAudio: 'exploration_choice_alldone' }); return { images: images }; }",
-                    "baseDir": "https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main",
-                    "audio": "exploration_selection",
-                    "audioTypes": ["mp3"],
-                    "choiceRequired": true,
-                    'showPreviousButton': false,
-                    "feedbackAudio": true,
-                    'parentTextBlock': parentTextBlock,
-                    "highlights": [
-                        {
-                            "range": [8.5, 10],
-                            "imageId": "same",
-                            "color": "yellow"
-                        },
-                        {
-                            "range": [10, 11.5],
-                            "imageId": "done",
-                            "color": "yellow"
-                        }
-                    ],
-                    "selectNextFrame": "function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) { return frameIndex + (frameData.selectedImage === 'done' ? 2 : 1); }"
-                },
-                
-                "broken-game": {
-                    "kind": "exp-lookit-images-audio",
-                    "generateProperties": "function(expData, sequence, child, pastSessions) { return { images: [] }; }",
-                    "baseDir": "https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main",
-                    "audio": "exploration_choice_alldone2",
-                    "audioTypes": ["mp3"],
-                    "choiceRequired": false,
-                    "showPreviousButton": false,
-                    "showReplayButton": false,
-                    "autoProceed": true,
-                    "waitForEndAudio": true,
-                    'parentTextBlock': parentTextBlock
-                },
                 
                 'final-thank-you': {
                     'kind': 'exp-lookit-video',
@@ -443,7 +406,7 @@ function generateProtocol(child, pastSessions) {
                 'surprise-rating-graded-surprising',
                 'surprise-why-explanation',
                 'how-did-you-choose',
-                'explore-more-test', 'broken-game','final-thank-you',
+                'final-thank-you',
                 'stop-recording', 'email-survey', 'exit-survey'
             ]
         };
@@ -472,9 +435,9 @@ function generateProtocol(child, pastSessions) {
             },
             'minority-test-win': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function() { let images = []; const centerOffset = 15; const spacing = 50; images.push({ id: "star", src: "card_star.png", left: centerOffset, top: 30, width: 15, height: 35, correct: true, feedbackAudio: "majority_cards_control_question_correct" }); images.push({ id: "dash", src: "card_dash.png", left: centerOffset + spacing, top: 30, width: 15, height: 35, correct: false, feedbackAudio: "majority_cards_control_question_incorrect" }); return { images: images }; }',
+                'generateProperties': 'function() { let images = []; const centerOffset = 15; const spacing = 50; images.push({ id: "star", src: "card_star.png", left: centerOffset, top: 30, width: 15, height: 35, correct: true, feedbackAudio: "control_question_correct" }); images.push({ id: "dash", src: "card_dash.png", left: centerOffset + spacing, top: 30, width: 15, height: 35, correct: false, feedbackAudio: "control_question_incorrect" }); return { images: images }; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'majority_cards_control_question',
+                'audio': 'control_question',
                 'audioTypes': ['mp3'],
                 'choiceRequired': true,
                 'correctChoice': 'star',
@@ -483,8 +446,8 @@ function generateProtocol(child, pastSessions) {
                 'nextButtonDelay': 'feedbackAudioEnd',
                 'parentTextBlock': parentTextBlock,
                 'highlights': [
-                    { 'range': [6, 7.75], 'imageId': 'star', 'color': 'blue' },
-                    { 'range': [7.75, 9.99], 'imageId': 'dash', 'color': 'blue' }
+                    { 'range': [8, 10], 'imageId': 'star', 'color': 'blue' },
+                    { 'range': [13, 15], 'imageId': 'dash', 'color': 'blue' }
                 ]
             },
             'minority-intro-2-unsurprising': {
@@ -540,39 +503,32 @@ function generateProtocol(child, pastSessions) {
             'minority-prediction-question': {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': `function() {
-                    const options = [
+                    const baseOptions = [
                         { id: "three_stars", src: "three_stars.png", feedbackAudio: "prereveal_threestars" },
                         { id: "two_stars", src: "two_stars.png", feedbackAudio: "prereveal_twostars" },
                         { id: "one_star", src: "one_star.png", feedbackAudio: "prereveal_onestar" },
                         { id: "all_dash", src: "all_dash.png", feedbackAudio: "prereveal_nostars" }
                     ];
-                    if (${isFlipped}) {
-                        options.reverse();
-                    }
+                    const baseHighlights = [
+                        { 'range': [2.75, 4], 'color': 'yellow' },
+                        { 'range': [4, 5.25], 'color': 'yellow' },
+                        { 'range': [5.25, 6.5], 'color': 'yellow' },
+                        { 'range': [6.5, 7.75], 'color': 'yellow' }
+                    ];
+                    const orderedOptions = ${isFlipped} ? [...baseOptions].reverse() : baseOptions;
                     const ratingWidth = 20; const ratingHeight = 35; const ratingY = 30; const spacing = 5;
                     const startX = (100 - (4 * ratingWidth + 3 * spacing)) / 2;
-                    let images = options.map((option, index) => ({
-                        ...option,
-                        left: startX + index * (ratingWidth + spacing),
-                        top: ratingY,
-                        width: ratingWidth,
-                        height: ratingHeight
-                    }));
-                    return { images: images };
+                    let images = orderedOptions.map((option, index) => ({ ...option, left: startX + index * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight }));
+                    const audio = ${isFlipped} ? 'stars_prereveal_prediction_flipped' : 'stars_prereveal_prediction';
+                    const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
+                    return { images: images, audio: audio, highlights: highlights };
                 }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'stars_prereveal_prediction',
                 'audioTypes': ['mp3'],
                 'choiceRequired': true,
                 'waitForEndAudio': true,
                 'feedbackAudio': true,
-                'parentTextBlock': parentTextBlock,
-                'highlights': [
-                    { 'range': [5, 6.25], 'imageId': 'three_stars', 'color': 'yellow' },
-                    { 'range': [6.25, 7.5], 'imageId': 'two_stars', 'color': 'yellow' },
-                    { 'range': [7.5, 8.75], 'imageId': 'one_star', 'color': 'yellow' },
-                    { 'range': [8.75, 9.99], 'imageId': 'all_dash', 'color': 'yellow' }
-                ]
+                'parentTextBlock': parentTextBlock
             },
             'minority-prediction-reveal-transition': {
                 'kind': 'exp-lookit-images-audio',
@@ -649,15 +605,18 @@ function generateProtocol(child, pastSessions) {
                     else if (correctSelections === 1) { topImageFile = "one_star.png"; surpriseAudio = "onestar_surprise_scale"; }
                     else { topImageFile = "all_dash.png"; surpriseAudio = "nostars_surprise_scale"; }
                     let images = [{ id: "topImage", src: topImageFile, left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
+                    const baseOptions = [
+                        { id: "surprised", src: "surprise_scale_a_little_surprised.png", feedbackAudio: "surprised" },
+                        { id: "not_surprised", src: "surprise_scale_not_surprised.png", feedbackAudio: "not_surprised" }
+                    ];
+                    const baseHighlights = [ { 'range': [5, 7], 'color': 'yellow' }, { 'range': [7, 9], 'color': 'yellow' } ];
+                    const orderedOptions = ${isFlipped} ? [...baseOptions].reverse() : baseOptions;
                     const ratingWidth = 25; const ratingHeight = 40; const ratingY = 50; const spacing = 20; const startX = (100 - (2 * ratingWidth + spacing)) / 2;
-                    const surprisedOption = { id: "surprised", src: "surprise_scale_a_little_surprised.png", left: startX, top: ratingY, width: ratingWidth, height: ratingHeight, feedbackAudio: "pretty_surprised" };
-                    const notSurprisedOption = { id: "not_surprised", src: "surprise_scale_not_surprised.png", left: startX + ratingWidth + spacing, top: ratingY, width: ratingWidth, height: ratingHeight, feedbackAudio: "not_surprised" };
-                    if (${isFlipped}) {
-                        images.push(notSurprisedOption, surprisedOption);
-                    } else {
-                        images.push(surprisedOption, notSurprisedOption);
-                    }
-                    return { images: images, audio: surpriseAudio };
+                    orderedOptions.forEach((option, index) => {
+                        images.push({ ...option, left: startX + index * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight });
+                    });
+                    const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
+                    return { images: images, audio: surpriseAudio, highlights: highlights };
                 }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audioTypes': ['mp3'],
@@ -670,32 +629,28 @@ function generateProtocol(child, pastSessions) {
              'surprise-rating-graded-unsurprising': {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': `function(expData, sequence) {
-                    const markedPositions = [[0, 2], [1, 0], [2, 4]]; const cardsPerRow = 5;
-                    const frameIds = [sequence[sequence.length - 8], sequence[sequence.length - 7], sequence[sequence.length - 6]];
-                    const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : undefined; }).filter(id => id !== undefined);
-                    const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / cardsPerRow); const col = pos % cardsPerRow; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length;
-                    let topImageFile;
-                    if (correctSelections === 3) { topImageFile = "selection_three_stars.png"; }
-                    else if (correctSelections === 2) { topImageFile = "two_stars.png"; }
-                    else if (correctSelections === 1) { topImageFile = "one_star.png"; }
-                    else { topImageFile = "all_dash.png"; }
-                    const options = [
+                    const baseOptions = [
                         { id: "a_little_surprised", src: "surprise_scale_a_little_surprised.png", feedbackAudio: "a_little_surprised" },
                         { id: "pretty_surprised", src: "surprise_scale_sorta_surprised.png", feedbackAudio: "pretty_surprised" },
                         { id: "very_surprised", src: "surprise_scale_very_surprised.png", feedbackAudio: "very_surprised" }
                     ];
-                    if (${isFlipped}) {
-                        options.reverse();
-                    }
-                    let images = [{ id: "topImage", src: topImageFile, left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
-                    const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 5;
+                    const baseHighlights = [
+                        { 'range': [4, 6], 'color': 'yellow' },
+                        { 'range': [6, 8], 'color': 'yellow' },
+                        { 'range': [8, 10], 'color': 'yellow' }
+                    ];
+                    const orderedOptions = ${isFlipped} ? [...baseOptions].reverse() : baseOptions;
+                    let images = [{ id: "topImage", src: "selection_three_stars.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
+                    const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 10;
                     const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2;
-                     options.forEach((option, index) => {
+                    orderedOptions.forEach((option, index) => {
                         images.push({ ...option, left: startX + index * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight });
                     });
-                    const prevFrameId = sequence[sequence.length - 1]; const prevChoice = expData[prevFrameId]?.selectedImage;
-                    const audioFile = (prevChoice === "not_surprised") ? "not_surprised_graded" : "surprised_graded";
-                    return { images: images, audio: audioFile };
+                    const prevFrameId = sequence[sequence.length - 1];
+                    const prevChoice = expData[prevFrameId]?.selectedImage;
+                    const audioFile = (prevChoice === "not_surprised") ? "not_surprised_followup" : (${isFlipped} ? "surprised_followup_flipped" : "surprised_followup");
+                    const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
+                    return { images: images, audio: audioFile, highlights: highlights };
                 }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audioTypes': ['mp3'],
@@ -719,7 +674,7 @@ function generateProtocol(child, pastSessions) {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': 'function() { return { images: [] }; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
-                'audio': 'majority_cards_selection_how',
+                'audio': 'card_selection_how',
                 'audioTypes': ['mp3'],
                 'choiceRequired': false,
                 'waitForEndAudio': true,
