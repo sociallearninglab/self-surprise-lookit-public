@@ -727,44 +727,6 @@ function generateProtocol(child, pastSessions) {
                 'durationSeconds': 15,
                 'parentTextBlock': parentTextBlock
             },
-            "explore-more-test": {
-                    "kind": "exp-lookit-images-audio",
-                    "generateProperties": "function(expData, sequence, child, pastSessions) { let images = []; const centerOffset = 15; const spacing = 50; images.push({ id: 'same', src: 'cards_sun_dash.png', left: centerOffset, top: 30, width: 25, height: 45, feedbackAudio: 'exploration_choice_cards' }); images.push({ id: 'done', src: 'question_mark.png', left: centerOffset + spacing, top: 30, width: 25, height: 45, feedbackAudio: 'exploration_choice_alldone' }); return { images: images }; }",
-                    "baseDir": "https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main",
-                    "audio": "exploration_selection",
-                    "audioTypes": ["mp3"],
-                    "choiceRequired": true,
-                    'showPreviousButton': false,
-                    "feedbackAudio": true,
-                    'parentTextBlock': parentTextBlock,
-                    "highlights": [
-                        {
-                            "range": [8.5, 10],
-                            "imageId": "same",
-                            "color": "yellow"
-                        },
-                        {
-                            "range": [10, 11.5],
-                            "imageId": "done",
-                            "color": "yellow"
-                        }
-                    ],
-                    "selectNextFrame": "function(frames, frameIndex, frameData, expData, sequence, child, pastSessions) { return frameIndex + (frameData.selectedImage === 'done' ? 2 : 1); }"
-                },
-                
-                "broken-game": {
-                    "kind": "exp-lookit-images-audio",
-                    "generateProperties": "function(expData, sequence, child, pastSessions) { return { images: [] }; }",
-                    "baseDir": "https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main",
-                    "audio": "exploration_choice_alldone2",
-                    "audioTypes": ["mp3"],
-                    "choiceRequired": false,
-                    "showPreviousButton": false,
-                    "showReplayButton": false,
-                    "autoProceed": true,
-                    "waitForEndAudio": true,
-                    'parentTextBlock': parentTextBlock
-                },
                 
                 'final-thank-you': {
                     'kind': 'exp-lookit-video',
@@ -809,7 +771,7 @@ function generateProtocol(child, pastSessions) {
                 'surprise-rating-graded-unsurprising',
                 'surprise-why-explanation',
                 'how-did-you-choose',
-                'explore-more-test', 'broken-game','final-thank-you',
+                'final-thank-you',
                 'stop-recording', 'email-survey', 'exit-survey'
             ]
         };
