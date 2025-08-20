@@ -296,7 +296,7 @@ function generateProtocol(child, pastSessions) {
                     });
                     const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
                     const audio = ${isFlipped} ? 'allthreestars_surprise_scale_flipped' : 'allthreestars_surprise_scale';
-                    return { images: images, highlights: highlights };
+                    return { images: images, highlights: highlights, audio: audio };
                 }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audioTypes': ['mp3'],
@@ -306,37 +306,25 @@ function generateProtocol(child, pastSessions) {
                 'parentTextBlock': parentTextBlock,
                 'selectNextFrame': 'function(frames, frameIndex, frameData) { return frameData.selectedImage === "not_surprised" ? frameIndex + 2 : frameIndex + 1; }'
             },
-            'surprise-rating-graded-unsurprising': {
+            'surprise-rating-graded-surprising': {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': `function(expData, sequence) {
-                    const markedPositions = [[0, 2], [1, 0], [2, 4]]; const cardsPerRow = 5;
-                    const frameIds = [sequence[sequence.length - 8], sequence[sequence.length - 7], sequence[sequence.length - 6]];
-                    const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : undefined; }).filter(id => id !== undefined);
-                    const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / cardsPerRow); const col = pos % cardsPerRow; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length;
-                    
-                    let topImageFile;
-                    let audioPrefix;
-                    if (correctSelections === 3) { topImageFile = "selection_three_stars.png"; audioPrefix = "threestars"; }
-                    else if (correctSelections === 2) { topImageFile = "two_stars.png"; audioPrefix = "twostars"; }
-                    else if (correctSelections === 1) { topImageFile = "one_star.png"; audioPrefix = "onestar"; }
-                    else { topImageFile = "all_dash.png"; audioPrefix = "nostars"; }
-
                     const baseOptions = [
                         { id: "a_little_surprised", src: "surprise_scale_a_little_surprised.png", feedbackAudio: "a_little_surprised" },
-                        { id: "pretty_surprised", src: "surprise_scale_somewhat_surprised.png", feedbackAudio: "pretty_surprised" },
+                        { id: "pretty_surprised", src: "surprise_scale_sorta_surprised.png", feedbackAudio: "pretty_surprised" },
                         { id: "very_surprised", src: "surprise_scale_very_surprised.png", feedbackAudio: "very_surprised" }
                     ];
                     const baseHighlights = [ { 'range': [4, 6], 'color': 'yellow' }, { 'range': [6, 8], 'color': 'yellow' }, { 'range': [8, 10], 'color': 'yellow' } ];
                     const orderedOptions = ${isFlipped} ? [...baseOptions].reverse() : baseOptions;
                     
-                    let images = [{ id: "topImage", src: topImageFile, left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
+                    let images = [{ id: "topImage", src: "selection_three_stars.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
                     const ratingWidth = 20; const ratingHeight = 35; const ratingY = 50; const spacing = 10;
                     const startX = (100 - (3 * ratingWidth + 2 * spacing)) / 2;
                     orderedOptions.forEach((option, index) => {
                         images.push({ ...option, left: startX + index * (ratingWidth + spacing), top: ratingY, width: ratingWidth, height: ratingHeight });
                     });
                     
-                    const audioFile = ${isFlipped} ? audioPrefix + "_surprised_followup_flipped" : audioPrefix + "_surprised_followup";
+                    const audioFile = ${isFlipped} ? "threestars_surprised_followup_flipped" : "threestars_surprised_followup";
                     const highlights = baseHighlights.map((highlight, index) => ({ ...highlight, imageId: orderedOptions[index].id }));
                     
                     return { images: images, audio: audioFile, highlights: highlights };
@@ -348,7 +336,7 @@ function generateProtocol(child, pastSessions) {
                 'feedbackAudio': true,
                 'parentTextBlock': parentTextBlock
             },
-                        'surprise-why-explanation': {
+            'surprise-why-explanation': {
                 'kind': 'exp-lookit-images-audio',
                 'generateProperties': 'function(expData, sequence) { const lastFrameData = expData[sequence[sequence.length - 1]]; const lastChoice = lastFrameData?.selectedImage; let audioFile = ""; let imageSrc = ""; switch (lastChoice) { case "not_surprised": audioFile = "not_surprised_why"; imageSrc = "surprise_scale_not_surprised.png"; break; case "a_little_surprised": audioFile = "little_surprised_why"; imageSrc = "surprise_scale_a_little_surprised.png"; break; case "pretty_surprised": audioFile = "pretty_surprised_why"; imageSrc = "surprise_scale_sorta_surprised.png"; break; case "very_surprised": audioFile = "very_surprised_why"; imageSrc = "surprise_scale_very_surprised.png"; break; } return { audio: audioFile, images: [{ id: "feedback_image", src: imageSrc, left: 35, top: 20, width: 30, height: 50, nonChoiceOption: true }]}; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
@@ -652,7 +640,7 @@ function generateProtocol(child, pastSessions) {
 
                     const baseOptions = [
                         { id: "a_little_surprised", src: "surprise_scale_a_little_surprised.png", feedbackAudio: "a_little_surprised" },
-                        { id: "pretty_surprised", src: "surprise_scale_somewhat_surprised.png", feedbackAudio: "pretty_surprised" },
+                        { id: "pretty_surprised", src: "surprise_scale_sorta_surprised.png", feedbackAudio: "pretty_surprised" },
                         { id: "very_surprised", src: "surprise_scale_very_surprised.png", feedbackAudio: "very_surprised" }
                     ];
                     const baseHighlights = [ { 'range': [4, 6], 'color': 'yellow' }, { 'range': [6, 8], 'color': 'yellow' }, { 'range': [8, 10], 'color': 'yellow' } ];
