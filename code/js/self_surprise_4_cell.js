@@ -41,7 +41,7 @@ function generateProtocol(child, pastSessions) {
             }, {
                 'text': '1. Webcam Setup and Video Consent: First, we\'ll be checking that your webcam is working. Then you and your child will give your consent to participate in this research.'
             }, {
-                'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 10 minutes in total.'
+                'text': '2. Start the Study: When you click the \'Start the game!\' button, the study will begin! This study will take about 5-7 minutes in total.'
             }, {
                 'text': 'Thank you so much for helping us with our science! We hope you have fun.'
             }],
@@ -338,7 +338,7 @@ function generateProtocol(child, pastSessions) {
             },
             'surprise-why-explanation': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function(expData, sequence) { const lastFrameData = expData[sequence[sequence.length - 1]]; const lastChoice = lastFrameData?.selectedImage; let audioFile = ""; let imageSrc = ""; switch (lastChoice) { case "not_surprised": audioFile = "not_surprised_why"; imageSrc = "surprise_scale_not_surprised.png"; break; case "a_little_surprised": audioFile = "little_surprised_why"; imageSrc = "surprise_scale_a_little_surprised.png"; break; case "pretty_surprised": audioFile = "pretty_surprised_why"; imageSrc = "surprise_scale_sorta_surprised.png"; break; case "very_surprised": audioFile = "very_surprised_why"; imageSrc = "surprise_scale_very_surprised.png"; break; } return { audio: audioFile, images: [{ id: "feedback_image", src: imageSrc, left: 35, top: 20, width: 30, height: 50, nonChoiceOption: true }]}; }',
+                'generateProperties': 'function(expData, sequence) { const lastFrameData = expData[sequence[sequence.length - 1]]; const lastChoice = lastFrameData?.selectedImage; let audioFile = ""; let imageSrc = ""; switch (lastChoice) { case "not_surprised": audioFile = "not_surprised_why"; imageSrc = "surprise_scale_not_surprised.png"; break; case "a_little_surprised": audioFile = "a_little_surprised_why"; imageSrc = "surprise_scale_a_little_surprised.png"; break; case "pretty_surprised": audioFile = "pretty_surprised_why"; imageSrc = "surprise_scale_sorta_surprised.png"; break; case "very_surprised": audioFile = "very_surprised_why"; imageSrc = "surprise_scale_very_surprised.png"; break; } return { audio: audioFile, images: [{ id: "feedback_image", src: imageSrc, left: 35, top: 20, width: 30, height: 50, nonChoiceOption: true }]}; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audioTypes': ['mp3'],
                 'choiceRequired': false,
@@ -667,7 +667,7 @@ function generateProtocol(child, pastSessions) {
             },
             'surprise-why-explanation': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function(expData, sequence) { const lastFrameData = expData[sequence[sequence.length - 1]]; const lastChoice = lastFrameData?.selectedImage; let audioFile = ""; let imageSrc = ""; switch (lastChoice) { case "not_surprised": audioFile = "not_surprised_why"; imageSrc = "surprise_scale_not_surprised.png"; break; case "a_little_surprised": audioFile = "little_surprised_why"; imageSrc = "surprise_scale_a_little_surprised.png"; break; case "pretty_surprised": audioFile = "pretty_surprised_why"; imageSrc = "surprise_scale_sorta_surprised.png"; break; case "very_surprised": audioFile = "very_surprised_why"; imageSrc = "surprise_scale_very_surprised.png"; break; } return { audio: audioFile, images: [{ id: "feedback_image", src: imageSrc, left: 35, top: 20, width: 30, height: 50, nonChoiceOption: true }]}; }',
+                'generateProperties': 'function(expData, sequence) { const lastFrameData = expData[sequence[sequence.length - 1]]; const lastChoice = lastFrameData?.selectedImage; let audioFile = ""; let imageSrc = ""; switch (lastChoice) { case "not_surprised": audioFile = "not_surprised_why"; imageSrc = "surprise_scale_not_surprised.png"; break; case "a_little_surprised": audioFile = "a_little_surprised_why"; imageSrc = "surprise_scale_a_little_surprised.png"; break; case "pretty_surprised": audioFile = "pretty_surprised_why"; imageSrc = "surprise_scale_sorta_surprised.png"; break; case "very_surprised": audioFile = "very_surprised_why"; imageSrc = "surprise_scale_very_surprised.png"; break; } return { audio: audioFile, images: [{ id: "feedback_image", src: imageSrc, left: 35, top: 20, width: 30, height: 50, nonChoiceOption: true }]}; }',
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audioTypes': ['mp3'],
                 'choiceRequired': false,
