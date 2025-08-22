@@ -344,7 +344,7 @@ function generateProtocol(child, pastSessions) {
                 'choiceRequired': false,
                 'waitForEndAudio': true,
                 'autoProceed': false,
-                'durationSeconds': 15,
+                'durationSeconds': 12,
                 'parentTextBlock': parentTextBlock
             },
             'how-did-you-choose': {
@@ -356,7 +356,7 @@ function generateProtocol(child, pastSessions) {
                 'choiceRequired': false,
                 'waitForEndAudio': true,
                 'autoProceed': false,
-                'durationSeconds': 15,
+                'durationSeconds': 11,
                 'parentTextBlock': parentTextBlock
             },
                 
@@ -673,7 +673,7 @@ function generateProtocol(child, pastSessions) {
                 'choiceRequired': false,
                 'waitForEndAudio': true,
                 'autoProceed': false,
-                'durationSeconds': 15,
+                'durationSeconds': 12,
                 'parentTextBlock': parentTextBlock
             },
             'how-did-you-choose': {
@@ -685,7 +685,7 @@ function generateProtocol(child, pastSessions) {
                 'choiceRequired': false,
                 'waitForEndAudio': true,
                 'autoProceed': false,
-                'durationSeconds': 15,
+                'durationSeconds': 11,
                 'parentTextBlock': parentTextBlock
             },
                 
