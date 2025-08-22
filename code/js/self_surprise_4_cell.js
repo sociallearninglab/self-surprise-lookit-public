@@ -227,6 +227,8 @@ function generateProtocol(child, pastSessions) {
                 'choiceRequired': false,
                 'waitForEndAudio': true,
                 'autoProceed': false,
+                'autoProceed': true,
+                'durationSeconds': 10,
                 'parentTextBlock': parentTextBlock
             },
             'minority-prediction-question': {
@@ -347,9 +349,12 @@ function generateProtocol(child, pastSessions) {
                 'durationSeconds': 12,
                 'parentTextBlock': parentTextBlock
             },
-            'how-did-you-choose': {
+            'how-did-you-choose-surprising': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function() { return { images: [] }; }',
+                'generateProperties': `function() {
+                    let images = [{ id: "topImage", src: "selection_three_stars.png", left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
+                    return { images: images };
+                }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audio': 'card_selection_how',
                 'audioTypes': ['mp3'],
@@ -402,7 +407,7 @@ function generateProtocol(child, pastSessions) {
                 'surprise-rating-yes-no-surprising',
                 'surprise-rating-graded-surprising',
                 'surprise-why-explanation',
-                'how-did-you-choose',
+                'how-did-you-choose-surprising',
                 'final-thank-you',
                 'stop-recording', 'email-survey', 'exit-survey'
             ]
@@ -495,6 +500,8 @@ function generateProtocol(child, pastSessions) {
                 'choiceRequired': false,
                 'waitForEndAudio': true,
                 'autoProceed': false,
+                'autoProceed': true,
+                'durationSeconds': 10,
                 'parentTextBlock': parentTextBlock
             },
             'minority-prediction-question': {
@@ -676,9 +683,24 @@ function generateProtocol(child, pastSessions) {
                 'durationSeconds': 12,
                 'parentTextBlock': parentTextBlock
             },
-            'how-did-you-choose': {
+            'how-did-you-choose-unsurprising': {
                 'kind': 'exp-lookit-images-audio',
-                'generateProperties': 'function() { return { images: [] }; }',
+                'generateProperties': `function(expData, sequence) {
+                    const markedPositions = [[0, 2], [1, 0], [2, 4]]; const cardsPerRow = 5;
+                    // Adjust the lookback index based on its position in the sequence. This assumes it's the 4th frame after the final card pick.
+                    const frameIds = [sequence[sequence.length - 10], sequence[sequence.length - 9], sequence[sequence.length - 8]];
+                    const selections = frameIds.map(frameId => { const clickEvents = expData[frameId]?.eventTimings?.filter(event => event.eventType === "exp-lookit-images-audio:clickImage") || []; return clickEvents.length > 0 ? clickEvents[clickEvents.length - 1].imageId : undefined; }).filter(id => id !== undefined);
+                    const correctSelections = selections.filter(selection => { const pos = parseInt(selection) - 1; const row = Math.floor(pos / cardsPerRow); const col = pos % cardsPerRow; return markedPositions.some(markedPos => markedPos[0] === row && markedPos[1] === col); }).length;
+                    
+                    let topImageFile;
+                    if (correctSelections === 3) { topImageFile = "selection_three_stars.png"; }
+                    else if (correctSelections === 2) { topImageFile = "two_stars.png"; }
+                    else if (correctSelections === 1) { topImageFile = "one_star.png"; }
+                    else { topImageFile = "all_dash.png"; }
+                    
+                    let images = [{ id: "topImage", src: topImageFile, left: 15, top: 0, width: 70, height: 45, nonChoiceOption: true }];
+                    return { images: images };
+                }`,
                 'baseDir': 'https://raw.githubusercontent.com/sociallearninglab/self-surprise-lookit-public/main',
                 'audio': 'card_selection_how',
                 'audioTypes': ['mp3'],
@@ -731,7 +753,7 @@ function generateProtocol(child, pastSessions) {
                 'surprise-rating-yes-no-unsurprising',
                 'surprise-rating-graded-unsurprising',
                 'surprise-why-explanation',
-                'how-did-you-choose',
+                'how-did-you-choose-unsurprising',
                 'final-thank-you',
                 'stop-recording', 'email-survey', 'exit-survey'
             ]
